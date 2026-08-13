@@ -35,7 +35,8 @@ export const metadata: Metadata = {
   creator: "PT Arcadia Charcoal Indonesia",
   publisher: "PT Arcadia Charcoal Indonesia",
   icons: {
-    icon: "/logo.png",
+    icon: "/logo3.png",
+    shortcut: "/logo3.png",
     apple: "/logo3.png",
   },
   openGraph: {

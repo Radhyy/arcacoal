@@ -120,10 +120,10 @@ export default function Hero() {
               className="w-full sm:w-auto px-4 sm:px-0"
             >
               <Link
-                href="#contact"
+                href="/products"
                 className="btn-dark-glossy w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 text-sm sm:text-base font-semibold text-white rounded-xl shadow-xl transition-all duration-300 group"
               >
-                <span>{t("Get Started", "Mulai Sekarang")}</span>
+                <span>{t("View Products", "Lihat Produk")}</span>
                 <ArrowRight className="w-4 h-4 text-slate-300 group-hover:translate-x-1.5 transition-transform duration-300" />
               </Link>
             </motion.div>

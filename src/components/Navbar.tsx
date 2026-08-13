@@ -25,7 +25,7 @@ export default function Navbar() {
   const navLinks = [
     { name: t("Home", "Beranda"), href: "/#home" },
     { name: t("About", "Tentang"), href: "/#about" },
-    { name: t("Products", "Produk"), href: "/products", isDropdown: true },
+    { name: t("Products", "Produk"), href: "/products" },
     { name: t("Gallery", "Galeri"), href: "/gallery" },
     { name: t("OEM", "OEM"), href: "/#oem" },
     { name: t("Legality", "Legalitas"), href: "/#legality" },
@@ -129,92 +129,14 @@ export default function Navbar() {
           <nav className="hidden lg:flex items-center gap-5 xl:gap-7 shrink-0">
             {navLinks.map((link, idx) => (
               <div key={idx} className="relative py-1">
-                {link.isDropdown ? (
-                  <div
-                    onMouseEnter={() => setProductsDropdownOpen(true)}
-                    onMouseLeave={() => setProductsDropdownOpen(false)}
-                  >
-                    <Link
-                      href={link.href}
-                      className="relative text-sm font-medium text-slate-600 hover:text-slate-950 transition-colors duration-200 whitespace-nowrap flex items-center gap-1 group"
-                    >
-                      <span>{link.name}</span>
-                      <ChevronDown
-                        className={`w-3.5 h-3.5 text-slate-400 group-hover:text-slate-950 transition-transform duration-200 ${
-                          productsDropdownOpen ? "rotate-180 text-[#E31E24]" : ""
-                        }`}
-                      />
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#E31E24] group-hover:w-full transition-all duration-200 rounded-full" />
-                    </Link>
-
-                    {/* Products Dropdown Menu Card */}
-                    {productsDropdownOpen && (
-                      <div className="absolute top-full left-0 mt-2 w-88 bg-white/98 backdrop-blur-xl border border-slate-200/90 shadow-2xl rounded-2xl p-3 z-50 transition-all duration-200 animate-in fade-in slide-in-from-top-2">
-                        <div className="px-3 py-2 border-b border-slate-100 mb-2 flex items-center justify-between">
-                          <span className="text-[11px] font-black uppercase tracking-wider text-[#E31E24]">
-                            {t("Charcoal Product Range", "Rangkaian Produk Arang")}
-                          </span>
-                          <Flame className="w-3.5 h-3.5 text-[#E31E24]" />
-                        </div>
-
-                        <div className="space-y-1">
-                          {productItems.map((item, pIdx) => (
-                            <Link
-                              key={pIdx}
-                              href={item.href}
-                              onClick={() => setProductsDropdownOpen(false)}
-                              className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-red-50/80 transition-colors group/item"
-                            >
-                              <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 p-1 flex items-center justify-center shrink-0">
-                                <Image
-                                  src={item.image}
-                                  alt={item.title}
-                                  width={40}
-                                  height={40}
-                                  unoptimized
-                                  className="w-full h-auto object-contain filter drop-shadow-sm group-hover/item:scale-110 transition-transform"
-                                  onError={(e) => {
-                                    const target = e.target as HTMLImageElement;
-                                    target.src = item.fallbackImage;
-                                  }}
-                                />
-                              </div>
-                              <div className="flex flex-col">
-                                <span className="text-xs font-bold text-slate-950 group-hover/item:text-[#E31E24] transition-colors flex items-center gap-1.5">
-                                  <span className="font-mono text-[#E31E24]">{item.number}</span>
-                                  <span>{item.title}</span>
-                                </span>
-                                <span className="text-[11px] text-slate-500 font-medium line-clamp-1">
-                                  {item.desc}
-                                </span>
-                              </div>
-                            </Link>
-                          ))}
-                        </div>
-
-                        <div className="pt-2 mt-2 border-t border-slate-100">
-                          <Link
-                            href="/products"
-                            onClick={() => setProductsDropdownOpen(false)}
-                            className="flex items-center justify-between w-full p-2.5 rounded-xl bg-slate-900 hover:bg-slate-950 text-xs font-bold text-white transition-all group/all"
-                          >
-                            <span>{t("Explore All Products & Specs", "Lihat Semua Produk & Spesifikasi")}</span>
-                            <ArrowRight className="w-3.5 h-3.5 text-red-400 group-hover/all:translate-x-1 transition-transform" />
-                          </Link>
-                        </div>
-                      </div>
-                    )}
-                  </div>
-                ) : (
-                  <Link
-                    href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
-                    className="relative text-sm font-medium text-slate-600 hover:text-slate-950 transition-colors duration-200 whitespace-nowrap py-1 group"
-                  >
-                    <span>{link.name}</span>
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#E31E24] group-hover:w-full transition-all duration-200 rounded-full" />
-                  </Link>
-                )}
+                <Link
+                  href={link.href}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                  className="relative text-sm font-medium text-slate-600 hover:text-slate-950 transition-colors duration-200 whitespace-nowrap py-1 group"
+                >
+                  <span>{link.name}</span>
+                  <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#E31E24] group-hover:w-full transition-all duration-200 rounded-full" />
+                </Link>
               </div>
             ))}
           </nav>

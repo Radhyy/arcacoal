@@ -239,7 +239,7 @@ export default function About() {
                   href="#contact"
                   className="btn-dark-glossy inline-flex items-center gap-2.5 px-7 py-3.5 text-sm font-semibold text-white rounded-xl shadow-lg transition-all group"
                 >
-                  <span>{t("Partner With Us", "Bermitra Dengan Kami")}</span>
+                  <span>{t("Contact Us", "Hubungi Kami")}</span>
                   <ArrowRight className="w-4 h-4 text-red-400 group-hover:translate-x-1.5 transition-transform duration-300" />
                 </Link>
               </motion.div>
