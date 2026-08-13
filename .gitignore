@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# seed scripts & raw design assets (>600MB)
+/scripts/
+/public/Website Content/
+
+

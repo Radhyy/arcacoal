@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Arcacoal - PT Arcadia Charcoal Indonesia Official Website & Admin Panel
 
-## Getting Started
+Sistem Website Company Profile & Live Visual Editor Admin Panel untuk **PT Arcadia Charcoal Indonesia**, produsen dan eksportir briket arang batok kelapa & arang kayu keras kelas dunia dari Indonesia.
 
-First, run the development server:
+## 🚀 Fitur Utama
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Company Profile Landing Page**: Modern, responsif, elegan, cepat, dan teroptimasi SEO dengan visual 3D charcoal, animasi Framer Motion, & dual language (Bahasa Indonesia & English).
+- **Admin Panel Visual Live Editor (`/admin`)**: Mengedit konten teks, gambar, spesifikasi produk, dan galeri secara visual real-time dengan pratinjau langsung.
+- **Auto-Translate Bi-directional Groq AI**: Penerjemahan dua arah otomatis (ID ↔ EN) saat menyimpan perubahan dari Admin Panel.
+- **Cloud Direct Upload ImgBB**: Mengunggah foto produk dan galeri baru langsung dari komputer ke CDN ImgBB.
+- **Database Neon PostgreSQL**: Penyimpanan data terpusat serverless PostgreSQL yang cepat dan andal.
+- **Autentikasi Admin JWT & Hash Password**: Akses aman ke Admin Panel dengan kredensial terenskripsi.
+
+## 🛠️ Teknologi yang Digunakan
+
+- **Framework**: Next.js 16 (App Router)
+- **UI & Styling**: React 19, TailwindCSS v4, Framer Motion, Lucide React
+- **Database**: Neon PostgreSQL Serverless (`@neondatabase/serverless`)
+- **AI Translation**: Groq AI SDK (`groq-sdk`)
+- **Image Storage**: ImgBB API CDN
+- **Deployment Adapter**: `@netlify/plugin-nextjs`
+
+## ⚙️ Environment Variables (`.env.local`)
+
+```env
+DATABASE_URL=your_database_url_here
+NEXT_PUBLIC_IMGBB_API_KEY=your_imgbb_api_key_here
+ADMIN_USERNAME=your_admin_username
+ADMIN_PASSWORD=your_admin_password
+ADMIN_JWT_SECRET=your_jwt_secret_key
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 💻 Jalankan di Lokal
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+# 1. Install dependensi
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+# 2. Jalankan server pengembangan
+npm run dev
 
-## Learn More
+# Buka http://localhost:3000 di browser Anda.
+```
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
+© 2026 PT Arcadia Charcoal Indonesia. All rights reserved.
