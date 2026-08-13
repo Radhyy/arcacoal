@@ -93,14 +93,19 @@ export default function Legality() {
 
   const isEn = lang === "en";
 
+  const nibRawUrl = legalityData.nib_image_url || "https://i.ibb.co/1YM69QWV/f888812aba50.png";
+  const npwpRawUrl = legalityData.npwp_image_url || "https://i.ibb.co/MDGtXBCm/9917de3fdd30.png";
+
   const legalDocs = [
     {
-      src: "/Website Content/Legalitas.png",
+      src: nibRawUrl.includes("i.ibb.co") ? `https://wsrv.nl/?url=${encodeURIComponent(nibRawUrl)}` : nibRawUrl,
+      fallbackSrc: "/legalitas1.png",
       title: isEn ? legalityData.nib_title_en : legalityData.nib_title_id,
       subtitle: isEn ? legalityData.nib_sub_en : legalityData.nib_sub_id,
     },
     {
-      src: "/Website Content/Legalitas 2.png",
+      src: npwpRawUrl.includes("i.ibb.co") ? `https://wsrv.nl/?url=${encodeURIComponent(npwpRawUrl)}` : npwpRawUrl,
+      fallbackSrc: "/legalitas2.png",
       title: isEn ? legalityData.npwp_title_en : legalityData.npwp_title_id,
       subtitle: isEn ? legalityData.npwp_sub_en : legalityData.npwp_sub_id,
     },
@@ -288,12 +293,19 @@ export default function Legality() {
                 onClick={() => setActiveDoc(doc.src)}
                 className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-lg group cursor-pointer aspect-[3/4] hover:shadow-2xl hover:border-orange-300 flex flex-col justify-between p-2 sm:p-3"
               >
-                <div className="relative rounded-xl sm:rounded-2xl overflow-hidden w-full h-full bg-slate-50 border border-slate-100">
-                  <Image
+                <div className="relative rounded-xl sm:rounded-2xl overflow-hidden w-full h-full bg-slate-50 border border-slate-100 flex items-center justify-center">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
                     src={doc.src}
                     alt={doc.title}
-                    fill
-                    className="object-contain object-center p-1.5 sm:p-2 group-hover:scale-105 transition-transform duration-500"
+                    onError={(e) => {
+                      const target = e.currentTarget as HTMLImageElement;
+                      if (!target.getAttribute("data-failed")) {
+                        target.setAttribute("data-failed", "true");
+                        target.src = doc.fallbackSrc;
+                      }
+                    }}
+                    className="w-full h-full object-contain object-center p-1.5 sm:p-2 group-hover:scale-105 transition-transform duration-500"
                   />
                   <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     <div className="p-2 sm:p-3 rounded-full bg-white/90 text-slate-900 shadow-lg">

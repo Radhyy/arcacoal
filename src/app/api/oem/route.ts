@@ -138,6 +138,7 @@ export async function PUT(request: Request) {
         p4_title_en = ${p4_title_en},
         p4_desc_id = ${p4_desc_id},
         p4_desc_en = ${p4_desc_en},
+        image_url = COALESCE(${body.image_url || null}, image_url),
 
         updated_at = CURRENT_TIMESTAMP
       WHERE id = 1

@@ -120,18 +120,25 @@ export default function OemExperience() {
               transition={{ repeat: Infinity, duration: 5, ease: "easeInOut" }}
               className="relative w-full max-w-lg p-2"
             >
-              <Image
-                src="/Website Content/Product.png"
-                alt="Arcacoal OEM Charcoal Packaging Services"
-                width={600}
-                height={500}
-                unoptimized
-                className="w-full h-auto object-contain filter drop-shadow-2xl hover:scale-105 transition-transform duration-500"
-                onError={(e) => {
-                  const target = e.target as HTMLImageElement;
-                  target.src = "/Product.png";
-                }}
-              />
+            {(() => {
+              const rawUrl = oemData.image_url || "https://i.ibb.co/0ydKbDLW/ebf20bdebb38.png";
+              const displaySrc = rawUrl.includes("i.ibb.co") ? `https://wsrv.nl/?url=${encodeURIComponent(rawUrl)}` : rawUrl;
+              return (
+                /* eslint-disable-next-line @next/next/no-img-element */
+                <img
+                  src={displaySrc}
+                  alt="Arcacoal OEM Charcoal Packaging Services"
+                  onError={(e) => {
+                    const target = e.currentTarget as HTMLImageElement;
+                    if (!target.getAttribute("data-failed")) {
+                      target.setAttribute("data-failed", "true");
+                      target.src = "/oem_product.png";
+                    }
+                  }}
+                  className="w-full h-auto object-contain filter drop-shadow-2xl hover:scale-105 transition-transform duration-500 max-w-lg"
+                />
+              );
+            })()}
             </motion.div>
           </motion.div>
 

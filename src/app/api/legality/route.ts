@@ -190,6 +190,8 @@ export async function PUT(request: Request) {
 
         standard_docs_json = ${JSON.stringify(standard_docs_json)}::jsonb,
         additional_docs_json = ${JSON.stringify(additional_docs_json)}::jsonb,
+        nib_image_url = COALESCE(${body.nib_image_url || null}, nib_image_url),
+        npwp_image_url = COALESCE(${body.npwp_image_url || null}, npwp_image_url),
 
         updated_at = CURRENT_TIMESTAMP
       WHERE id = 1
