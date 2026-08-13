@@ -196,6 +196,7 @@ export default function Gallery() {
             const photoSrc = photo.src || fallbackSrc;
             const photoTitle = isEn ? photo.title_en || photo.title_id : photo.title_id || photo.title_en;
             const photoCategory = isEn ? photo.category_en || photo.category_id : photo.category_id || photo.category_en;
+            const displaySrc = photoSrc.includes("i.ibb.co") ? `https://wsrv.nl/?url=${encodeURIComponent(photoSrc)}` : photoSrc;
 
             return (
               <motion.div
@@ -203,13 +204,13 @@ export default function Gallery() {
                 variants={cardVariants}
                 whileHover={{ y: -6, scale: 1.025 }}
                 transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                onClick={() => setActiveImage(photoSrc)}
+                onClick={() => setActiveImage(displaySrc)}
                 className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 border border-slate-200/90 shadow-md shadow-slate-900/5 group cursor-pointer aspect-[3/4] hover:shadow-xl hover:border-orange-300"
               >
                 {/* HTML <img> tag with automatic failover fallback if ImgBB SSL/network fails */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={photoSrc}
+                  src={displaySrc}
                   alt={photoTitle || "Arcacoal Gallery"}
                   onError={(e) => {
                     const target = e.currentTarget as HTMLImageElement;

@@ -171,6 +171,7 @@ export default function ProductsTeaser() {
             const title = isEn ? prod.title_en || prod.title_id : prod.title_id || prod.title_en;
             const subtitle = isEn ? prod.subtitle_en || prod.subtitle_id : prod.subtitle_id || prod.subtitle_en;
             const description = isEn ? prod.description_en || prod.description_id : prod.description_id || prod.description_en;
+            const displaySrc = imageSrc.includes("i.ibb.co") ? `https://wsrv.nl/?url=${encodeURIComponent(imageSrc)}` : imageSrc;
 
             return (
               <motion.div
@@ -185,7 +186,7 @@ export default function ProductsTeaser() {
                   <div className="relative w-full aspect-square bg-slate-50/80 rounded-xl sm:rounded-2xl p-2 sm:p-4 mb-3 sm:mb-6 flex items-center justify-center overflow-hidden border border-slate-100">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={imageSrc}
+                      src={displaySrc}
                       alt={title || "Arcacoal Product"}
                       onError={(e) => {
                         const target = e.currentTarget as HTMLImageElement;

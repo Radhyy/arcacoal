@@ -201,6 +201,7 @@ export default function ProductsPage() {
             const title = isEn ? prod.title_en || prod.title_id : prod.title_id || prod.title_en;
             const subtitle = isEn ? prod.subtitle_en || prod.subtitle_id : prod.subtitle_id || prod.subtitle_en;
             const description = isEn ? prod.description_en || prod.description_id : prod.description_id || prod.description_en;
+            const displaySrc = imageSrc.includes("i.ibb.co") ? `https://wsrv.nl/?url=${encodeURIComponent(imageSrc)}` : imageSrc;
             const specs = Array.isArray(prod.specs_json) ? prod.specs_json : [];
             const sizesLeft = Array.isArray(prod.sizesLeft_json) ? prod.sizesLeft_json : [];
             const sizesRight = Array.isArray(prod.sizesRight_json) ? prod.sizesRight_json : [];
@@ -216,7 +217,7 @@ export default function ProductsPage() {
                   <div className="relative w-full max-w-sm aspect-square flex items-center justify-center">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
-                      src={imageSrc}
+                      src={displaySrc}
                       alt={title || "Arcacoal Product"}
                       onError={(e) => {
                         const target = e.currentTarget as HTMLImageElement;

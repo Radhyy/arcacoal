@@ -200,17 +200,18 @@ export default function GalleryPage() {
             const photoSrc = photo.src || fallbackSrc;
             const photoTitle = isEn ? photo.title_en || photo.title_id : photo.title_id || photo.title_en;
             const photoCategory = isEn ? photo.category_en || photo.category_id : photo.category_id || photo.category_en;
+            const displaySrc = photoSrc.includes("i.ibb.co") ? `https://wsrv.nl/?url=${encodeURIComponent(photoSrc)}` : photoSrc;
 
             return (
               <div
                 key={index}
-                onClick={() => setActiveImage(photoSrc)}
+                onClick={() => setActiveImage(displaySrc)}
                 className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 border border-slate-200/90 shadow-md group cursor-pointer aspect-[3/4] hover:-translate-y-1.5 transition-all duration-300 hover:shadow-2xl hover:border-orange-300"
               >
                 {/* HTML <img> tag with automatic failover fallback */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src={photoSrc}
+                  src={displaySrc}
                   alt={photoTitle || "Arcacoal Factory Gallery"}
                   onError={(e) => {
                     const target = e.currentTarget as HTMLImageElement;
