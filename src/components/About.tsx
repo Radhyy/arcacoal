@@ -235,13 +235,15 @@ export default function About() {
                 whileTap={{ scale: 0.98 }}
                 transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
-                <Link
-                  href="#contact"
+                <a
+                  href="https://wa.me/6282227130022?text=Hello%20Arcacoal,%20I%20want%20to%20inquire%20about%20your%20charcoal%20products."
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="btn-dark-glossy inline-flex items-center gap-2.5 px-7 py-3.5 text-sm font-semibold text-white rounded-xl shadow-lg transition-all group"
                 >
                   <span>{t("Contact Us", "Hubungi Kami")}</span>
                   <ArrowRight className="w-4 h-4 text-red-400 group-hover:translate-x-1.5 transition-transform duration-300" />
-                </Link>
+                </a>
               </motion.div>
             </motion.div>
           </motion.div>
