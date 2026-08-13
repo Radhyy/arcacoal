@@ -144,31 +144,31 @@ export default function GalleryPage() {
         });
 
   return (
-    <main className="min-h-screen bg-[#FCFCFC] text-slate-950 selection:bg-orange-500 selection:text-white">
+    <main className="min-h-screen bg-[#FCFCFC] text-slate-950 selection:bg-red-600 selection:text-white">
       <Navbar />
 
       <section className="relative pt-32 pb-24 px-4 sm:px-6 lg:px-12 max-w-7xl mx-auto w-full">
         {/* Background Ambient Glow */}
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-orange-100/25 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-red-100/25 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col items-center text-center">
           {/* Breadcrumb Navigation Bar */}
-          <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white border border-slate-200/90 shadow-sm text-sm font-medium text-slate-700 mb-8 hover:border-orange-200 transition-colors">
+          <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white border border-slate-200/90 shadow-sm text-sm font-medium text-slate-700 mb-8 hover:border-red-200 transition-colors">
             <Link
               href="/"
-              className="hover:text-[#F06B33] transition-colors flex items-center gap-1.5"
+              className="hover:text-[#E31E24] transition-colors flex items-center gap-1.5"
             >
               <Home className="w-4 h-4 text-slate-600" />
               <span>{t("Home", "Beranda")}</span>
             </Link>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            <span className="text-[#F06B33] font-bold">{t("Gallery", "Galeri")}</span>
+            <span className="text-[#E31E24] font-bold">{t("Gallery", "Galeri")}</span>
           </div>
 
           {/* Page Title */}
           <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-950 tracking-tight leading-[1.12] mb-4">
             {isEn ? galleryData.header_title_en : galleryData.header_title_id}{" "}
-            <span className="text-[#F06B33]">{isEn ? "Factory Showcase" : "Pabrik & Produksi"}</span>
+            <span className="text-[#E31E24]">{isEn ? "Factory Showcase" : "Pabrik & Produksi"}</span>
           </h1>
 
           <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed max-w-2xl mb-10">
@@ -183,7 +183,7 @@ export default function GalleryPage() {
                 onClick={() => setActiveCategory(cat.id)}
                 className={`px-3.5 sm:px-5 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold transition-all duration-300 cursor-pointer ${
                   activeCategory === cat.id
-                    ? "bg-white text-slate-950 shadow-md shadow-slate-900/5 text-[#F06B33]"
+                    ? "bg-white text-slate-950 shadow-md shadow-slate-900/5 text-[#E31E24]"
                     : "text-slate-600 hover:text-slate-950 hover:bg-white/50"
                 }`}
               >
@@ -206,7 +206,7 @@ export default function GalleryPage() {
               <div
                 key={index}
                 onClick={() => setActiveImage(displaySrc)}
-                className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 border border-slate-200/90 shadow-md group cursor-pointer aspect-[3/4] hover:-translate-y-1.5 transition-all duration-300 hover:shadow-2xl hover:border-orange-300"
+                className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 border border-slate-200/90 shadow-md group cursor-pointer aspect-[3/4] hover:-translate-y-1.5 transition-all duration-300 hover:shadow-2xl hover:border-red-300"
               >
                 {/* HTML <img> tag with automatic failover fallback */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -226,11 +226,11 @@ export default function GalleryPage() {
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-950/85 via-slate-950/30 to-transparent opacity-75 group-hover:opacity-90 transition-opacity duration-300" />
 
                 <div className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-white/80 backdrop-blur-md border border-white/50 text-slate-900 opacity-0 group-hover:opacity-100 transition-all duration-300">
-                  <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F06B33]" />
+                  <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#E31E24]" />
                 </div>
 
                 <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5 transform translate-y-1 sm:translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
-                  <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-orange-500/90 text-[8px] sm:text-[10px] font-bold text-white uppercase tracking-wider mb-1 sm:mb-2 inline-block">
+                  <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-red-600/90 text-[8px] sm:text-[10px] font-bold text-white uppercase tracking-wider mb-1 sm:mb-2 inline-block">
                     {photoCategory}
                   </span>
                   <h3 className="text-xs sm:text-base font-bold text-white leading-snug mb-0.5 sm:mb-1 line-clamp-2">
@@ -246,7 +246,7 @@ export default function GalleryPage() {
         <div className="mt-20 pt-10 border-t border-slate-200/70 flex flex-col sm:flex-row items-center justify-between gap-6">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-200/80 text-slate-800 text-sm font-bold shadow-2xs hover:border-orange-200 hover:text-[#F06B33] transition-all"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-200/80 text-slate-800 text-sm font-bold shadow-2xs hover:border-red-200 hover:text-[#E31E24] transition-all"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{t("Back to Home", "Kembali ke Beranda")}</span>
@@ -257,7 +257,7 @@ export default function GalleryPage() {
             className="btn-dark-glossy inline-flex items-center gap-2.5 px-8 py-3.5 text-sm font-bold text-white rounded-xl shadow-lg hover:scale-105 transition-transform"
           >
             <span>{t("Contact Us", "Hubungi Kami")}</span>
-            <ChevronRight className="w-4 h-4 text-orange-400" />
+            <ChevronRight className="w-4 h-4 text-red-400" />
           </Link>
         </div>
       </section>

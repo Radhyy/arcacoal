@@ -63,6 +63,9 @@ export default function AdminDashboard() {
   const [isSavingAbout, setIsSavingAbout] = useState(false);
   const [aboutAlert, setAboutAlert] = useState<{ type: "success" | "error"; msg: string } | null>(null);
   const [isUploadingAboutLogo, setIsUploadingAboutLogo] = useState(false);
+  const [isUploadingOemImage, setIsUploadingOemImage] = useState(false);
+  const [isUploadingNibImage, setIsUploadingNibImage] = useState(false);
+  const [isUploadingNpwpImage, setIsUploadingNpwpImage] = useState(false);
 
   const handleUploadAboutLogo = async (file: File) => {
     const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY || "949a3da1b4ea03c17bf20de030522347";
@@ -777,6 +780,17 @@ export default function AdminDashboard() {
     setProductsForm({ ...productsForm, products_json: updated });
   };
 
+  const getAdminImgUrl = (url?: string, fallback: string = "/logo3.png") => {
+    if (!url) return fallback;
+    if (url.includes("i.ibb.co")) {
+      return `https://wsrv.nl/?url=${encodeURIComponent(url)}`;
+    }
+    if (url.startsWith("/Website Content/")) {
+      return fallback;
+    }
+    return url;
+  };
+
   const handleLogout = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("arcacoal_admin_session");
@@ -788,18 +802,18 @@ export default function AdminDashboard() {
   if (isAuthenticated === null) {
     return (
       <div className="min-h-screen bg-[#F6F7F9] flex flex-col items-center justify-center font-sans">
-        <div className="w-8 h-8 border-3 border-[#F06B33]/20 border-t-[#F06B33] rounded-full animate-spin mb-4" />
+        <div className="w-8 h-8 border-3 border-[#E31E24]/20 border-t-[#E31E24] rounded-full animate-spin mb-4" />
         <p className="text-xs font-semibold text-slate-500">Memeriksa Hak Akses Autentikasi...</p>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F6F7F9] text-slate-900 font-sans flex flex-col lg:flex-row selection:bg-orange-500 selection:text-white">
+    <div className="min-h-screen bg-[#F6F7F9] text-slate-900 font-sans flex flex-col lg:flex-row selection:bg-red-600 selection:text-white">
       {/* Mobile Header Bar */}
       <div className="lg:hidden bg-white border-b border-slate-200/80 px-4 py-3 flex items-center justify-between sticky top-0 z-40">
         <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-orange-50 flex items-center justify-center">
+          <div className="w-8 h-8 rounded-lg bg-red-50 flex items-center justify-center">
             <Image src="/logo3.png" alt="Logo" width={28} height={28} unoptimized className="w-5 h-5 object-contain" />
           </div>
           <span className="font-extrabold text-slate-900 text-sm">Arcacoal Admin</span>
@@ -835,7 +849,7 @@ export default function AdminDashboard() {
         <div>
           {/* Top Brand Header */}
           <div className="flex items-center gap-3 mb-8 px-1">
-            <div className="w-9 h-9 rounded-xl bg-orange-50 border border-orange-100 flex items-center justify-center shrink-0">
+            <div className="w-9 h-9 rounded-xl bg-red-50 border border-red-100 flex items-center justify-center shrink-0">
               <Image
                 src="/logo3.png"
                 alt="Arcacoal Flame"
@@ -847,7 +861,7 @@ export default function AdminDashboard() {
             </div>
             <div>
               <h2 className="text-base font-black text-slate-950 tracking-tight leading-none">Arcacoal</h2>
-              <span className="text-[10px] font-bold text-[#F06B33] uppercase tracking-widest">ADMIN PANEL</span>
+              <span className="text-[10px] font-bold text-[#E31E24] uppercase tracking-widest">ADMIN PANEL</span>
             </div>
           </div>
 
@@ -859,7 +873,7 @@ export default function AdminDashboard() {
               placeholder={t("Search...", "Cari...")}
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-100/80 border border-slate-200/80 text-xs font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-[#F06B33] focus:bg-white transition-all"
+              className="w-full pl-9 pr-8 py-2 rounded-xl bg-slate-100/80 border border-slate-200/80 text-xs font-medium text-slate-800 placeholder:text-slate-400 focus:outline-none focus:border-[#E31E24] focus:bg-white transition-all"
             />
             {searchQuery ? (
               <button
@@ -893,18 +907,18 @@ export default function AdminDashboard() {
                         setActiveTab(item.id);
                         setMobileSidebarOpen(false);
                       }}
-                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-bold transition-all cursor-pointer ${
+                      className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-extrabold transition-all cursor-pointer ${
                         isActive
-                          ? "bg-[#0F172A] text-white shadow-md shadow-slate-900/10"
-                          : "text-slate-600 hover:text-slate-950 hover:bg-slate-100/80"
+                          ? "bg-[#E31E24] text-white shadow-md shadow-red-500/25"
+                          : "text-slate-600 hover:text-slate-950 hover:bg-red-50/80"
                       }`}
                     >
                       <div className="flex items-center gap-3">
-                        <Icon className={`w-4 h-4 ${isActive ? "text-orange-400" : "text-slate-400"}`} />
+                        <Icon className={`w-4 h-4 ${isActive ? "text-white" : "text-slate-400"}`} />
                         <span>{item.label}</span>
                       </div>
                       {item.badge !== null && item.badge !== undefined && (
-                        <span className="px-2 py-0.5 rounded-full bg-orange-100 text-[#F06B33] text-[10px] font-bold">
+                        <span className="px-2 py-0.5 rounded-full bg-red-100 text-[#E31E24] text-[10px] font-bold">
                           {item.badge}
                         </span>
                       )}
@@ -918,7 +932,7 @@ export default function AdminDashboard() {
                     <button
                       type="button"
                       onClick={() => setSearchQuery("")}
-                      className="text-[11px] font-bold text-[#F06B33] hover:underline mt-1 block mx-auto"
+                      className="text-[11px] font-bold text-[#E31E24] hover:underline mt-1 block mx-auto"
                     >
                       Reset Pencarian
                     </button>
@@ -977,7 +991,7 @@ export default function AdminDashboard() {
                 onClick={() => setEditLang("id")}
                 className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer ${
                   editLang === "id"
-                    ? "bg-[#0F172A] text-white shadow-xs"
+                    ? "bg-[#E31E24] text-white shadow-md shadow-red-500/20"
                     : "text-slate-700 hover:text-slate-950"
                 }`}
               >
@@ -988,7 +1002,7 @@ export default function AdminDashboard() {
                 onClick={() => setEditLang("en")}
                 className={`px-3 py-1.5 rounded-lg text-xs font-extrabold transition-all flex items-center gap-1.5 cursor-pointer ${
                   editLang === "en"
-                    ? "bg-[#0F172A] text-white shadow-xs"
+                    ? "bg-[#E31E24] text-white shadow-md shadow-red-500/20"
                     : "text-slate-700 hover:text-slate-950"
                 }`}
               >
@@ -998,11 +1012,11 @@ export default function AdminDashboard() {
 
             <button className="p-2.5 rounded-xl bg-white border border-slate-200 text-slate-600 hover:text-slate-950 relative shadow-2xs transition-colors cursor-pointer">
               <Bell className="w-4 h-4" />
-              <span className="w-2 h-2 rounded-full bg-[#F06B33] absolute top-2 right-2 ring-2 ring-white" />
+              <span className="w-2 h-2 rounded-full bg-[#E31E24] absolute top-2 right-2 ring-2 ring-white" />
             </button>
 
             <div className="flex items-center gap-3 pl-3 border-l border-slate-200">
-              <div className="w-9 h-9 rounded-full bg-[#0F172A] text-white flex items-center justify-center font-bold text-xs shadow-xs">
+              <div className="w-9 h-9 rounded-full bg-[#E31E24] text-white flex items-center justify-center font-bold text-xs shadow-md shadow-red-500/20">
                 A
               </div>
               <div className="hidden sm:block">
@@ -1056,11 +1070,11 @@ export default function AdminDashboard() {
                       {t("Factory Documentation", "Foto Galeri")}
                     </span>
                     <h3 className="text-2xl sm:text-3xl font-extrabold text-slate-950">{(galleryForm.photos_json || []).length || 8}</h3>
-                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-amber-600 mt-2">
+                    <span className="inline-flex items-center gap-1 text-[11px] font-bold text-red-600 mt-2">
                       <Sparkles className="w-3.5 h-3.5" /> Foto Aktif
                     </span>
                   </div>
-                  <div className="w-12 h-12 rounded-2xl bg-amber-50 border border-amber-100 flex items-center justify-center text-amber-600">
+                  <div className="w-12 h-12 rounded-2xl bg-red-50 border border-red-100 flex items-center justify-center text-red-600">
                     <ImageIcon className="w-6 h-6" />
                   </div>
                 </div>
@@ -1074,64 +1088,64 @@ export default function AdminDashboard() {
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                   <button
                     onClick={() => setActiveTab("about")}
-                    className="p-5 rounded-2xl bg-slate-50 hover:bg-orange-50 border border-slate-200 hover:border-orange-300 text-left transition-all group cursor-pointer"
+                    className="p-5 rounded-2xl bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-left transition-all group cursor-pointer"
                   >
-                    <FileText className="w-6 h-6 text-slate-700 group-hover:text-[#F06B33] mb-3" />
-                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#F06B33]">01. Section About Us</h4>
+                    <FileText className="w-6 h-6 text-slate-700 group-hover:text-[#E31E24] mb-3" />
+                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#E31E24]">01. Section About Us</h4>
                     <p className="text-xs text-slate-500 mt-1">Edit profil PT Arcadia Charcoal Indonesia & poin keunggulan.</p>
                   </button>
 
                   <button
                     onClick={() => setActiveTab("features")}
-                    className="p-5 rounded-2xl bg-slate-50 hover:bg-orange-50 border border-slate-200 hover:border-orange-300 text-left transition-all group cursor-pointer"
+                    className="p-5 rounded-2xl bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-left transition-all group cursor-pointer"
                   >
-                    <CheckSquare className="w-6 h-6 text-slate-700 group-hover:text-[#F06B33] mb-3" />
-                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#F06B33]">02. Section Keunggulan</h4>
+                    <CheckSquare className="w-6 h-6 text-slate-700 group-hover:text-[#E31E24] mb-3" />
+                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#E31E24]">02. Section Keunggulan</h4>
                     <p className="text-xs text-slate-500 mt-1">Edit 4 badge ramah lingkungan & deskripsi produk murni.</p>
                   </button>
 
                   <button
                     onClick={() => setActiveTab("performance")}
-                    className="p-5 rounded-2xl bg-slate-50 hover:bg-orange-50 border border-slate-200 hover:border-orange-300 text-left transition-all group cursor-pointer"
+                    className="p-5 rounded-2xl bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-left transition-all group cursor-pointer"
                   >
-                    <Zap className="w-6 h-6 text-slate-700 group-hover:text-[#F06B33] mb-3" />
-                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#F06B33]">03. Section Performa Ekspor</h4>
+                    <Zap className="w-6 h-6 text-slate-700 group-hover:text-[#E31E24] mb-3" />
+                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#E31E24]">03. Section Performa Ekspor</h4>
                     <p className="text-xs text-slate-500 mt-1">Edit 4 pilar performa (Tanpa Bau, Abu Sedikit, Panas Tinggi, Nyala Lama).</p>
                   </button>
 
                   <button
                     onClick={() => setActiveTab("oem")}
-                    className="p-5 rounded-2xl bg-slate-50 hover:bg-orange-50 border border-slate-200 hover:border-orange-300 text-left transition-all group cursor-pointer"
+                    className="p-5 rounded-2xl bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-left transition-all group cursor-pointer"
                   >
-                    <Package className="w-6 h-6 text-slate-700 group-hover:text-[#F06B33] mb-3" />
-                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#F06B33]">04. Section OEM Private Label</h4>
+                    <Package className="w-6 h-6 text-slate-700 group-hover:text-[#E31E24] mb-3" />
+                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#E31E24]">04. Section OEM Private Label</h4>
                     <p className="text-xs text-slate-500 mt-1">Edit 4 pilar layanan OEM (Formulasi, Kemasan Box, QC, Dokumen).</p>
                   </button>
 
                   <button
                     onClick={() => setActiveTab("legality")}
-                    className="p-5 rounded-2xl bg-slate-50 hover:bg-orange-50 border border-slate-200 hover:border-orange-300 text-left transition-all group cursor-pointer"
+                    className="p-5 rounded-2xl bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-left transition-all group cursor-pointer"
                   >
-                    <ShieldCheck className="w-6 h-6 text-slate-700 group-hover:text-[#F06B33] mb-3" />
-                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#F06B33]">05. Section Legalitas Ekspor</h4>
+                    <ShieldCheck className="w-6 h-6 text-slate-700 group-hover:text-[#E31E24] mb-3" />
+                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#E31E24]">05. Section Legalitas Ekspor</h4>
                     <p className="text-xs text-slate-500 mt-1">Edit daftar sertifikat resmi & dokumen ekspor buyer.</p>
                   </button>
 
                   <button
                     onClick={() => setActiveTab("gallery")}
-                    className="p-5 rounded-2xl bg-slate-50 hover:bg-orange-50 border border-slate-200 hover:border-orange-300 text-left transition-all group cursor-pointer"
+                    className="p-5 rounded-2xl bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-left transition-all group cursor-pointer"
                   >
-                    <ImageIcon className="w-6 h-6 text-slate-700 group-hover:text-[#F06B33] mb-3" />
-                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#F06B33]">06. Section Galeri Foto</h4>
+                    <ImageIcon className="w-6 h-6 text-slate-700 group-hover:text-[#E31E24] mb-3" />
+                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#E31E24]">06. Section Galeri Foto</h4>
                     <p className="text-xs text-slate-500 mt-1">Edit & unggah foto galeri dokumentasi aktivitas pabrik.</p>
                   </button>
 
                   <button
                     onClick={() => setActiveTab("products")}
-                    className="p-5 rounded-2xl bg-slate-50 hover:bg-orange-50 border border-slate-200 hover:border-orange-300 text-left transition-all group cursor-pointer"
+                    className="p-5 rounded-2xl bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-left transition-all group cursor-pointer"
                   >
-                    <ShoppingBag className="w-6 h-6 text-slate-700 group-hover:text-[#F06B33] mb-3" />
-                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#F06B33]">07. Section Produk & Spesifikasi</h4>
+                    <ShoppingBag className="w-6 h-6 text-slate-700 group-hover:text-[#E31E24] mb-3" />
+                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#E31E24]">07. Section Produk & Spesifikasi</h4>
                     <p className="text-xs text-slate-500 mt-1">Edit spesifikasi produk briket, foto produk, tabel ukuran, & grade.</p>
                   </button>
                 </div>
@@ -1159,7 +1173,7 @@ export default function AdminDashboard() {
                   type="button"
                   onClick={handleSaveAbout}
                   disabled={isSavingAbout}
-                  className="btn-dark-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
+                  className="btn-red-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
                 >
                   {isSavingAbout ? (
                     <>
@@ -1184,17 +1198,17 @@ export default function AdminDashboard() {
               )}
 
               {/* REAL LIVE VISUAL COMPONENT PREVIEW FOR ABOUT SECTION */}
-              <div className="bg-white rounded-3xl border-2 border-orange-200 shadow-xl overflow-hidden relative">
+              <div className="bg-white rounded-3xl border-2 border-red-200 shadow-xl overflow-hidden relative">
                 <div className="bg-slate-950 px-6 py-3 text-white flex items-center justify-between text-xs font-semibold">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#E31E24]" />
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                     <span className="ml-2 text-slate-400 font-mono">
                       Tampilan Asli Website - Mode Editing: {editLang === "id" ? "🇮🇩 Bahasa Indonesia" : "🇬🇧 English"}
                     </span>
                   </div>
-                  <span className="text-orange-400 font-bold text-[11px] flex items-center gap-1">
+                  <span className="text-red-400 font-bold text-[11px] flex items-center gap-1">
                     <Edit3 className="w-3.5 h-3.5" /> Klik / Edit Teks Di Bawah
                   </span>
                 </div>
@@ -1202,7 +1216,7 @@ export default function AdminDashboard() {
                 <div className="p-8 sm:p-12 bg-[#FCFCFC] space-y-12">
                   <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="text-3xl font-black text-[#F06B33] font-mono">01.</span>
+                      <span className="text-3xl font-black text-[#E31E24] font-mono">01.</span>
                       <input
                         type="text"
                         value={editLang === "id" ? aboutForm.badge_id || "" : aboutForm.badge_en || ""}
@@ -1211,7 +1225,7 @@ export default function AdminDashboard() {
                             ? setAboutForm({ ...aboutForm, badge_id: e.target.value })
                             : setAboutForm({ ...aboutForm, badge_en: e.target.value })
                         }
-                        className="px-4 py-1.5 rounded-full bg-orange-50 border border-orange-300 text-xs font-bold tracking-widest text-[#F06B33] uppercase text-center focus:outline-none focus:ring-2 focus:ring-[#F06B33]"
+                        className="px-4 py-1.5 rounded-full bg-red-50 border border-red-300 text-xs font-bold tracking-widest text-[#E31E24] uppercase text-center focus:outline-none focus:ring-2 focus:ring-[#E31E24]"
                       />
                     </div>
 
@@ -1225,7 +1239,7 @@ export default function AdminDashboard() {
                             ? setAboutForm({ ...aboutForm, title_id: e.target.value })
                             : setAboutForm({ ...aboutForm, title_en: e.target.value })
                         }
-                        className="w-full text-2xl sm:text-4xl font-extrabold text-slate-950 text-center tracking-tight bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#F06B33]"
+                        className="w-full text-2xl sm:text-4xl font-extrabold text-slate-950 text-center tracking-tight bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#E31E24]"
                       />
                     </div>
 
@@ -1239,7 +1253,7 @@ export default function AdminDashboard() {
                             ? setAboutForm({ ...aboutForm, subtitle_id: e.target.value })
                             : setAboutForm({ ...aboutForm, subtitle_en: e.target.value })
                         }
-                        className="w-full text-sm sm:text-base text-slate-600 font-medium text-center bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#F06B33]"
+                        className="w-full text-sm sm:text-base text-slate-600 font-medium text-center bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#E31E24]"
                       />
                     </div>
                   </div>
@@ -1252,7 +1266,7 @@ export default function AdminDashboard() {
                       <div className="w-full max-w-sm p-4 rounded-2xl bg-slate-50 border border-slate-200 flex items-center justify-center relative min-h-[140px]">
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
-                          src={aboutForm.logo_url || "/logo3.png"}
+                          src={getAdminImgUrl(aboutForm.logo_url, "/logo3.png")}
                           alt="Logo Preview"
                           onError={(e) => {
                             const target = e.currentTarget as HTMLImageElement;
@@ -1273,7 +1287,7 @@ export default function AdminDashboard() {
                       </div>
 
                       {/* Direct Upload File Button for Logo */}
-                      <label className="w-full max-w-sm py-2.5 px-3 rounded-xl bg-orange-50 hover:bg-orange-100 border border-orange-200 text-[#F06B33] text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                      <label className="w-full max-w-sm py-2.5 px-3 rounded-xl bg-red-50 hover:bg-red-100 border border-red-200 text-[#E31E24] text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
                         <UploadCloud className="w-4 h-4" />
                         <span>Upload Foto Logo Baru</span>
                         <input
@@ -1294,7 +1308,7 @@ export default function AdminDashboard() {
                           type="text"
                           value={aboutForm.logo_url || ""}
                           onChange={(e) => setAboutForm({ ...aboutForm, logo_url: e.target.value })}
-                          className="w-full text-xs font-mono text-slate-600 bg-slate-50 border border-slate-200 rounded-lg p-2 focus:bg-white focus:border-[#F06B33]"
+                          className="w-full text-xs font-mono text-slate-600 bg-slate-50 border border-slate-200 rounded-lg p-2 focus:bg-white focus:border-[#E31E24]"
                         />
                       </div>
 
@@ -1304,7 +1318,7 @@ export default function AdminDashboard() {
                           type="text"
                           value={aboutForm.company_name || ""}
                           onChange={(e) => setAboutForm({ ...aboutForm, company_name: e.target.value })}
-                          className="w-full text-sm font-bold text-slate-900 bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#F06B33]"
+                          className="w-full text-sm font-bold text-slate-900 bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#E31E24]"
                         />
                       </div>
                     </div>
@@ -1320,7 +1334,7 @@ export default function AdminDashboard() {
                               ? setAboutForm({ ...aboutForm, paragraph1_id: e.target.value })
                               : setAboutForm({ ...aboutForm, paragraph1_en: e.target.value })
                           }
-                          className="w-full text-xs sm:text-sm text-slate-700 bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#F06B33]"
+                          className="w-full text-xs sm:text-sm text-slate-700 bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#E31E24]"
                         />
                       </div>
 
@@ -1334,12 +1348,12 @@ export default function AdminDashboard() {
                               ? setAboutForm({ ...aboutForm, paragraph2_id: e.target.value })
                               : setAboutForm({ ...aboutForm, paragraph2_en: e.target.value })
                           }
-                          className="w-full text-xs sm:text-sm text-slate-700 bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#F06B33]"
+                          className="w-full text-xs sm:text-sm text-slate-700 bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#E31E24]"
                         />
                       </div>
 
-                      <div className="p-4 rounded-2xl bg-orange-50/80 border border-orange-200">
-                        <label className="text-[10px] font-bold text-[#F06B33] uppercase tracking-widest block mb-1">7. Teks Kutipan Komitmen ({editLang.toUpperCase()})</label>
+                      <div className="p-4 rounded-2xl bg-red-50/80 border border-red-200">
+                        <label className="text-[10px] font-bold text-[#E31E24] uppercase tracking-widest block mb-1">7. Teks Kutipan Komitmen ({editLang.toUpperCase()})</label>
                         <input
                           type="text"
                           value={editLang === "id" ? aboutForm.quote_id || "" : aboutForm.quote_en || ""}
@@ -1348,7 +1362,7 @@ export default function AdminDashboard() {
                               ? setAboutForm({ ...aboutForm, quote_id: e.target.value })
                               : setAboutForm({ ...aboutForm, quote_en: e.target.value })
                           }
-                          className="w-full text-xs sm:text-sm font-semibold italic text-[#F06B33] bg-white border border-orange-300 rounded-xl p-2.5"
+                          className="w-full text-xs sm:text-sm font-semibold italic text-[#E31E24] bg-white border border-red-300 rounded-xl p-2.5"
                         />
                       </div>
 
@@ -1356,7 +1370,7 @@ export default function AdminDashboard() {
                         <label className="text-[10px] font-bold text-slate-400 uppercase tracking-widest block">8. Tiga Poin Keunggulan Utama Perusahaan ({editLang.toUpperCase()})</label>
 
                         <div className="flex items-center gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-[#F06B33] shrink-0" />
+                          <CheckCircle2 className="w-4 h-4 text-[#E31E24] shrink-0" />
                           <input
                             type="text"
                             value={editLang === "id" ? aboutForm.bullet1_id || "" : aboutForm.bullet1_en || ""}
@@ -1370,7 +1384,7 @@ export default function AdminDashboard() {
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-[#F06B33] shrink-0" />
+                          <CheckCircle2 className="w-4 h-4 text-[#E31E24] shrink-0" />
                           <input
                             type="text"
                             value={editLang === "id" ? aboutForm.bullet2_id || "" : aboutForm.bullet2_en || ""}
@@ -1384,7 +1398,7 @@ export default function AdminDashboard() {
                         </div>
 
                         <div className="flex items-center gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-[#F06B33] shrink-0" />
+                          <CheckCircle2 className="w-4 h-4 text-[#E31E24] shrink-0" />
                           <input
                             type="text"
                             value={editLang === "id" ? aboutForm.bullet3_id || "" : aboutForm.bullet3_en || ""}
@@ -1423,7 +1437,7 @@ export default function AdminDashboard() {
                   type="button"
                   onClick={handleSaveFeatures}
                   disabled={isSavingFeatures}
-                  className="btn-dark-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
+                  className="btn-red-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
                 >
                   {isSavingFeatures ? (
                     <>
@@ -1447,11 +1461,11 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              <div className="bg-white rounded-3xl border-2 border-orange-200 shadow-xl overflow-hidden relative">
+              <div className="bg-white rounded-3xl border-2 border-red-200 shadow-xl overflow-hidden relative">
                 <div className="bg-slate-950 px-6 py-3 text-white flex items-center justify-between text-xs font-semibold">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#E31E24]" />
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                     <span className="ml-2 text-slate-400 font-mono">Tampilan Section Keunggulan</span>
                   </div>
@@ -1467,7 +1481,7 @@ export default function AdminDashboard() {
                           ? setFeaturesForm({ ...featuresForm, badge_id: e.target.value })
                           : setFeaturesForm({ ...featuresForm, badge_en: e.target.value })
                       }
-                      className="px-4 py-1.5 rounded-full bg-orange-50 border border-orange-300 text-xs font-bold tracking-widest text-[#F06B33] uppercase text-center"
+                      className="px-4 py-1.5 rounded-full bg-red-50 border border-red-300 text-xs font-bold tracking-widest text-[#E31E24] uppercase text-center"
                     />
 
                     <input
@@ -1551,7 +1565,7 @@ export default function AdminDashboard() {
                               ? setFeaturesForm({ ...featuresForm, badge1_id: e.target.value })
                               : setFeaturesForm({ ...featuresForm, badge1_en: e.target.value })
                           }
-                          className="text-xs font-bold text-[#F06B33] bg-orange-50 border border-orange-200 rounded-xl p-2.5"
+                          className="text-xs font-bold text-[#E31E24] bg-red-50 border border-red-200 rounded-xl p-2.5"
                         />
                         <input
                           type="text"
@@ -1561,7 +1575,7 @@ export default function AdminDashboard() {
                               ? setFeaturesForm({ ...featuresForm, badge2_id: e.target.value })
                               : setFeaturesForm({ ...featuresForm, badge2_en: e.target.value })
                           }
-                          className="text-xs font-bold text-[#F06B33] bg-orange-50 border border-orange-200 rounded-xl p-2.5"
+                          className="text-xs font-bold text-[#E31E24] bg-red-50 border border-red-200 rounded-xl p-2.5"
                         />
                         <input
                           type="text"
@@ -1571,7 +1585,7 @@ export default function AdminDashboard() {
                               ? setFeaturesForm({ ...featuresForm, badge3_id: e.target.value })
                               : setFeaturesForm({ ...featuresForm, badge3_en: e.target.value })
                           }
-                          className="text-xs font-bold text-[#F06B33] bg-orange-50 border border-orange-200 rounded-xl p-2.5"
+                          className="text-xs font-bold text-[#E31E24] bg-red-50 border border-red-200 rounded-xl p-2.5"
                         />
                         <input
                           type="text"
@@ -1581,7 +1595,7 @@ export default function AdminDashboard() {
                               ? setFeaturesForm({ ...featuresForm, badge4_id: e.target.value })
                               : setFeaturesForm({ ...featuresForm, badge4_en: e.target.value })
                           }
-                          className="text-xs font-bold text-[#F06B33] bg-orange-50 border border-orange-200 rounded-xl p-2.5"
+                          className="text-xs font-bold text-[#E31E24] bg-red-50 border border-red-200 rounded-xl p-2.5"
                         />
                       </div>
                     </div>
@@ -1610,7 +1624,7 @@ export default function AdminDashboard() {
                   type="button"
                   onClick={handleSavePerf}
                   disabled={isSavingPerf}
-                  className="btn-dark-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
+                  className="btn-red-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
                 >
                   {isSavingPerf ? (
                     <>
@@ -1634,11 +1648,11 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              <div className="bg-white rounded-3xl border-2 border-orange-200 shadow-xl overflow-hidden relative">
+              <div className="bg-white rounded-3xl border-2 border-red-200 shadow-xl overflow-hidden relative">
                 <div className="bg-slate-950 px-6 py-3 text-white flex items-center justify-between text-xs font-semibold">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#E31E24]" />
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                     <span className="ml-2 text-slate-400 font-mono">Tampilan Section Performa</span>
                   </div>
@@ -1648,7 +1662,7 @@ export default function AdminDashboard() {
                   <div className="grid md:grid-cols-2 gap-6">
                     {/* Pilar 1 */}
                     <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-3">
-                      <span className="text-xs font-mono font-bold text-[#F06B33]">Pilar 01</span>
+                      <span className="text-xs font-mono font-bold text-[#E31E24]">Pilar 01</span>
                       <input
                         type="text"
                         value={editLang === "id" ? perfForm.item1_title_id || "" : perfForm.item1_title_en || ""}
@@ -1667,7 +1681,7 @@ export default function AdminDashboard() {
                             ? setPerfForm({ ...perfForm, item1_badge_id: e.target.value })
                             : setPerfForm({ ...perfForm, item1_badge_en: e.target.value })
                         }
-                        className="w-full text-xs font-bold text-[#F06B33] bg-orange-50 border border-orange-200 rounded-lg p-2"
+                        className="w-full text-xs font-bold text-[#E31E24] bg-red-50 border border-red-200 rounded-lg p-2"
                       />
                       <textarea
                         rows={2}
@@ -1683,7 +1697,7 @@ export default function AdminDashboard() {
 
                     {/* Pilar 2 */}
                     <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-3">
-                      <span className="text-xs font-mono font-bold text-[#F06B33]">Pilar 02</span>
+                      <span className="text-xs font-mono font-bold text-[#E31E24]">Pilar 02</span>
                       <input
                         type="text"
                         value={editLang === "id" ? perfForm.item2_title_id || "" : perfForm.item2_title_en || ""}
@@ -1702,7 +1716,7 @@ export default function AdminDashboard() {
                             ? setPerfForm({ ...perfForm, item2_badge_id: e.target.value })
                             : setPerfForm({ ...perfForm, item2_badge_en: e.target.value })
                         }
-                        className="w-full text-xs font-bold text-[#F06B33] bg-orange-50 border border-orange-200 rounded-lg p-2"
+                        className="w-full text-xs font-bold text-[#E31E24] bg-red-50 border border-red-200 rounded-lg p-2"
                       />
                       <textarea
                         rows={2}
@@ -1718,7 +1732,7 @@ export default function AdminDashboard() {
 
                     {/* Pilar 3 */}
                     <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-3">
-                      <span className="text-xs font-mono font-bold text-[#F06B33]">Pilar 03</span>
+                      <span className="text-xs font-mono font-bold text-[#E31E24]">Pilar 03</span>
                       <input
                         type="text"
                         value={editLang === "id" ? perfForm.item3_title_id || "" : perfForm.item3_title_en || ""}
@@ -1737,7 +1751,7 @@ export default function AdminDashboard() {
                             ? setPerfForm({ ...perfForm, item3_badge_id: e.target.value })
                             : setPerfForm({ ...perfForm, item3_badge_en: e.target.value })
                         }
-                        className="w-full text-xs font-bold text-[#F06B33] bg-orange-50 border border-orange-200 rounded-lg p-2"
+                        className="w-full text-xs font-bold text-[#E31E24] bg-red-50 border border-red-200 rounded-lg p-2"
                       />
                       <textarea
                         rows={2}
@@ -1753,7 +1767,7 @@ export default function AdminDashboard() {
 
                     {/* Pilar 4 */}
                     <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-3">
-                      <span className="text-xs font-mono font-bold text-[#F06B33]">Pilar 04</span>
+                      <span className="text-xs font-mono font-bold text-[#E31E24]">Pilar 04</span>
                       <input
                         type="text"
                         value={editLang === "id" ? perfForm.item4_title_id || "" : perfForm.item4_title_en || ""}
@@ -1772,7 +1786,7 @@ export default function AdminDashboard() {
                             ? setPerfForm({ ...perfForm, item4_badge_id: e.target.value })
                             : setPerfForm({ ...perfForm, item4_badge_en: e.target.value })
                         }
-                        className="w-full text-xs font-bold text-[#F06B33] bg-orange-50 border border-orange-200 rounded-lg p-2"
+                        className="w-full text-xs font-bold text-[#E31E24] bg-red-50 border border-red-200 rounded-lg p-2"
                       />
                       <textarea
                         rows={2}
@@ -1810,7 +1824,7 @@ export default function AdminDashboard() {
                   type="button"
                   onClick={handleSaveOem}
                   disabled={isSavingOem}
-                  className="btn-dark-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
+                  className="btn-red-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
                 >
                   {isSavingOem ? (
                     <>
@@ -1834,11 +1848,11 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              <div className="bg-white rounded-3xl border-2 border-orange-200 shadow-xl overflow-hidden relative">
+              <div className="bg-white rounded-3xl border-2 border-red-200 shadow-xl overflow-hidden relative">
                 <div className="bg-slate-950 px-6 py-3 text-white flex items-center justify-between text-xs font-semibold">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#E31E24]" />
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                     <span className="ml-2 text-slate-400 font-mono">Tampilan Section OEM Private Label</span>
                   </div>
@@ -1854,7 +1868,7 @@ export default function AdminDashboard() {
                           ? setOemForm({ ...oemForm, title_id: e.target.value })
                           : setOemForm({ ...oemForm, title_en: e.target.value })
                       }
-                      className="w-full text-2xl font-extrabold text-[#F06B33] bg-white border border-slate-300 rounded-xl p-3"
+                      className="w-full text-2xl font-extrabold text-[#E31E24] bg-white border border-slate-300 rounded-xl p-3"
                     />
 
                     <textarea
@@ -1871,7 +1885,7 @@ export default function AdminDashboard() {
 
                   <div className="grid md:grid-cols-2 gap-6 pt-4 border-t border-slate-200">
                     <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-3">
-                      <span className="text-xs font-mono font-bold text-[#F06B33]">OEM Pilar 01</span>
+                      <span className="text-xs font-mono font-bold text-[#E31E24]">OEM Pilar 01</span>
                       <input
                         type="text"
                         value={editLang === "id" ? oemForm.p1_title_id || "" : oemForm.p1_title_en || ""}
@@ -1895,7 +1909,7 @@ export default function AdminDashboard() {
                     </div>
 
                     <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-3">
-                      <span className="text-xs font-mono font-bold text-[#F06B33]">OEM Pilar 02</span>
+                      <span className="text-xs font-mono font-bold text-[#E31E24]">OEM Pilar 02</span>
                       <input
                         type="text"
                         value={editLang === "id" ? oemForm.p2_title_id || "" : oemForm.p2_title_en || ""}
@@ -1919,7 +1933,7 @@ export default function AdminDashboard() {
                     </div>
 
                     <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-3">
-                      <span className="text-xs font-mono font-bold text-[#F06B33]">OEM Pilar 03</span>
+                      <span className="text-xs font-mono font-bold text-[#E31E24]">OEM Pilar 03</span>
                       <input
                         type="text"
                         value={editLang === "id" ? oemForm.p3_title_id || "" : oemForm.p3_title_en || ""}
@@ -1943,7 +1957,7 @@ export default function AdminDashboard() {
                     </div>
 
                     <div className="bg-white border border-slate-200 p-5 rounded-2xl space-y-3">
-                      <span className="text-xs font-mono font-bold text-[#F06B33]">OEM Pilar 04</span>
+                      <span className="text-xs font-mono font-bold text-[#E31E24]">OEM Pilar 04</span>
                       <input
                         type="text"
                         value={editLang === "id" ? oemForm.p4_title_id || "" : oemForm.p4_title_en || ""}
@@ -1990,7 +2004,7 @@ export default function AdminDashboard() {
                   type="button"
                   onClick={handleSaveLegality}
                   disabled={isSavingLegality}
-                  className="btn-dark-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
+                  className="btn-red-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
                 >
                   {isSavingLegality ? (
                     <>
@@ -2014,11 +2028,11 @@ export default function AdminDashboard() {
                 </div>
               )}
 
-              <div className="bg-white rounded-3xl border-2 border-orange-200 shadow-xl overflow-hidden relative">
+              <div className="bg-white rounded-3xl border-2 border-red-200 shadow-xl overflow-hidden relative">
                 <div className="bg-slate-950 px-6 py-3 text-white flex items-center justify-between text-xs font-semibold">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#E31E24]" />
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                     <span className="ml-2 text-slate-400 font-mono">Tampilan Section Legalitas</span>
                   </div>
@@ -2056,7 +2070,7 @@ export default function AdminDashboard() {
                       <button
                         type="button"
                         onClick={addStandardDocItem}
-                        className="text-xs font-bold text-[#F06B33] flex items-center gap-1 cursor-pointer"
+                        className="text-xs font-bold text-[#E31E24] flex items-center gap-1 cursor-pointer"
                       >
                         <Plus className="w-3.5 h-3.5" /> Tambah Baris Dokumen
                       </button>
@@ -2103,7 +2117,7 @@ export default function AdminDashboard() {
                       <button
                         type="button"
                         onClick={addAdditionalDocItem}
-                        className="text-xs font-bold text-[#F06B33] flex items-center gap-1 cursor-pointer"
+                        className="text-xs font-bold text-[#E31E24] flex items-center gap-1 cursor-pointer"
                       >
                         <Plus className="w-3.5 h-3.5" /> Tambah Baris Dokumen Tambahan
                       </button>
@@ -2112,7 +2126,7 @@ export default function AdminDashboard() {
                     <div className="space-y-2">
                       {(legalityForm.additional_docs_json || []).map((doc: any, aIdx: number) => (
                         <div key={aIdx} className="flex items-center gap-2">
-                          <CheckCircle2 className="w-4 h-4 text-orange-500 shrink-0" />
+                          <CheckCircle2 className="w-4 h-4 text-red-600 shrink-0" />
                           <input
                             type="text"
                             value={editLang === "id" ? doc.id || doc.en || "" : doc.en || doc.id || ""}
@@ -2167,7 +2181,7 @@ export default function AdminDashboard() {
                   type="button"
                   onClick={handleSaveGallery}
                   disabled={isSavingGallery}
-                  className="btn-dark-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
+                  className="btn-red-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
                 >
                   {isSavingGallery ? (
                     <>
@@ -2192,17 +2206,17 @@ export default function AdminDashboard() {
               )}
 
               {/* REAL LIVE VISUAL COMPONENT PREVIEW FOR GALLERY SECTION */}
-              <div className="bg-white rounded-3xl border-2 border-orange-200 shadow-xl overflow-hidden relative">
+              <div className="bg-white rounded-3xl border-2 border-red-200 shadow-xl overflow-hidden relative">
                 <div className="bg-slate-950 px-6 py-3 text-white flex items-center justify-between text-xs font-semibold">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#E31E24]" />
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                     <span className="ml-2 text-slate-400 font-mono">
                       Tampilan Asli Website - Mode Editing: {editLang === "id" ? "🇮🇩 Bahasa Indonesia" : "🇬🇧 English"}
                     </span>
                   </div>
-                  <span className="text-orange-400 font-bold text-[11px] flex items-center gap-1">
+                  <span className="text-red-400 font-bold text-[11px] flex items-center gap-1">
                     <Edit3 className="w-3.5 h-3.5" /> Klik / Edit Teks & Foto Di Bawah
                   </span>
                 </div>
@@ -2211,7 +2225,7 @@ export default function AdminDashboard() {
                   {/* Header Controls */}
                   <div className="flex flex-col items-center text-center max-w-3xl mx-auto">
                     <div className="flex items-center gap-3 mb-4">
-                      <span className="text-3xl font-black text-[#F06B33] font-mono">03.</span>
+                      <span className="text-3xl font-black text-[#E31E24] font-mono">03.</span>
                       <input
                         type="text"
                         value={editLang === "id" ? galleryForm.badge_id || "" : galleryForm.badge_en || ""}
@@ -2220,7 +2234,7 @@ export default function AdminDashboard() {
                             ? setGalleryForm({ ...galleryForm, badge_id: e.target.value })
                             : setGalleryForm({ ...galleryForm, badge_en: e.target.value })
                         }
-                        className="px-4 py-1.5 rounded-full bg-orange-50 border border-orange-300 text-xs font-bold tracking-widest text-[#F06B33] uppercase text-center focus:outline-none focus:ring-2 focus:ring-[#F06B33]"
+                        className="px-4 py-1.5 rounded-full bg-red-50 border border-red-300 text-xs font-bold tracking-widest text-[#E31E24] uppercase text-center focus:outline-none focus:ring-2 focus:ring-[#E31E24]"
                       />
                     </div>
 
@@ -2234,7 +2248,7 @@ export default function AdminDashboard() {
                             ? setGalleryForm({ ...galleryForm, header_title_id: e.target.value })
                             : setGalleryForm({ ...galleryForm, header_title_en: e.target.value })
                         }
-                        className="w-full text-2xl sm:text-4xl font-extrabold text-slate-950 text-center tracking-tight bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#F06B33]"
+                        className="w-full text-2xl sm:text-4xl font-extrabold text-slate-950 text-center tracking-tight bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#E31E24]"
                       />
                     </div>
 
@@ -2248,7 +2262,7 @@ export default function AdminDashboard() {
                             ? setGalleryForm({ ...galleryForm, header_subtitle_id: e.target.value })
                             : setGalleryForm({ ...galleryForm, header_subtitle_en: e.target.value })
                         }
-                        className="w-full text-sm sm:text-base text-slate-600 font-medium text-center bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#F06B33]"
+                        className="w-full text-sm sm:text-base text-slate-600 font-medium text-center bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#E31E24]"
                       />
                     </div>
                   </div>
@@ -2257,14 +2271,14 @@ export default function AdminDashboard() {
                   <div className="border-t border-slate-200/80 pt-10 space-y-8">
                     <div className="flex items-center justify-between">
                       <h4 className="text-base font-extrabold text-slate-950 flex items-center gap-2">
-                        <ImageIcon className="w-5 h-5 text-[#F06B33]" />
+                        <ImageIcon className="w-5 h-5 text-[#E31E24]" />
                         <span>Daftar Foto Galeri ({(galleryForm.photos_json || []).length} Foto)</span>
                       </h4>
 
                       <button
                         type="button"
                         onClick={addGalleryItem}
-                        className="px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
+                        className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
                       >
                         <Plus className="w-4 h-4" />
                         <span>Tambah Foto Galeri Baru</span>
@@ -2273,7 +2287,7 @@ export default function AdminDashboard() {
 
                     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
                       {(galleryForm.photos_json || []).map((photo: any, index: number) => (
-                        <div key={index} className="bg-white border-2 border-slate-200 hover:border-orange-300 rounded-3xl p-4 shadow-sm space-y-4 relative transition-all">
+                        <div key={index} className="bg-white border-2 border-slate-200 hover:border-red-300 rounded-3xl p-4 shadow-sm space-y-4 relative transition-all">
                           {/* Delete Button */}
                           <button
                             type="button"
@@ -2294,7 +2308,7 @@ export default function AdminDashboard() {
                           <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-slate-900 border border-slate-200">
                             {/* eslint-disable-next-line @next/next/no-img-element */}
                             <img
-                              src={photo.src || photo.local_src || `/Website Content/Foto/1-17.png`}
+                              src={getAdminImgUrl(photo.src || photo.local_src, "/legalitas1.png")}
                               alt="Gallery Preview"
                               className="w-full h-full object-cover"
                             />
@@ -2309,7 +2323,7 @@ export default function AdminDashboard() {
                           </div>
 
                           {/* Upload File Direct Button */}
-                          <label className="w-full py-2 px-3 rounded-xl bg-orange-50 hover:bg-orange-100 border border-orange-200 text-[#F06B33] text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                          <label className="w-full py-2 px-3 rounded-xl bg-red-50 hover:bg-red-100 border border-red-200 text-[#E31E24] text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
                             <UploadCloud className="w-4 h-4" />
                             <span>Upload Foto Baru</span>
                             <input
@@ -2333,7 +2347,7 @@ export default function AdminDashboard() {
                                 updated[index].src = e.target.value;
                                 setGalleryForm({ ...galleryForm, photos_json: updated });
                               }}
-                              className="w-full text-xs font-mono text-slate-600 bg-slate-50 border border-slate-200 rounded-lg p-2 focus:bg-white focus:border-[#F06B33]"
+                              className="w-full text-xs font-mono text-slate-600 bg-slate-50 border border-slate-200 rounded-lg p-2 focus:bg-white focus:border-[#E31E24]"
                             />
                           </div>
 
@@ -2348,7 +2362,7 @@ export default function AdminDashboard() {
                                 else updated[index].title_en = e.target.value;
                                 setGalleryForm({ ...galleryForm, photos_json: updated });
                               }}
-                              className="w-full text-xs font-bold text-slate-900 bg-slate-50 border border-slate-200 rounded-lg p-2 focus:bg-white focus:border-[#F06B33]"
+                              className="w-full text-xs font-bold text-slate-900 bg-slate-50 border border-slate-200 rounded-lg p-2 focus:bg-white focus:border-[#E31E24]"
                             />
                           </div>
 
@@ -2386,7 +2400,7 @@ export default function AdminDashboard() {
                                 }
                                 setGalleryForm({ ...galleryForm, photos_json: updated });
                               }}
-                              className="w-full text-xs font-bold text-[#F06B33] bg-orange-50/80 border border-orange-200 rounded-lg p-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#F06B33] cursor-pointer"
+                              className="w-full text-xs font-bold text-[#E31E24] bg-red-50/80 border border-red-200 rounded-lg p-2 focus:bg-white focus:outline-none focus:ring-2 focus:ring-[#E31E24] cursor-pointer"
                             >
                               <option value={editLang === "id" ? "Produksi" : "Production"}>
                                 {editLang === "id" ? "Produksi" : "Production"}
@@ -2434,7 +2448,7 @@ export default function AdminDashboard() {
                   type="button"
                   onClick={handleSaveProducts}
                   disabled={isSavingProducts}
-                  className="btn-dark-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
+                  className="btn-red-glossy shrink-0 inline-flex items-center gap-2 px-6 py-3 text-xs font-bold text-white rounded-xl shadow-lg cursor-pointer disabled:opacity-70"
                 >
                   {isSavingProducts ? (
                     <>
@@ -2459,17 +2473,17 @@ export default function AdminDashboard() {
               )}
 
               {/* REAL LIVE VISUAL COMPONENT PREVIEW FOR PRODUCTS SECTION */}
-              <div className="bg-white rounded-3xl border-2 border-orange-200 shadow-xl overflow-hidden relative">
+              <div className="bg-white rounded-3xl border-2 border-red-200 shadow-xl overflow-hidden relative">
                 <div className="bg-slate-950 px-6 py-3 text-white flex items-center justify-between text-xs font-semibold">
                   <div className="flex items-center gap-2">
                     <span className="w-2.5 h-2.5 rounded-full bg-red-500" />
-                    <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
+                    <span className="w-2.5 h-2.5 rounded-full bg-[#E31E24]" />
                     <span className="w-2.5 h-2.5 rounded-full bg-emerald-500" />
                     <span className="ml-2 text-slate-400 font-mono">
                       Tampilan Asli Page Produk - Mode Editing: {editLang === "id" ? "🇮🇩 Bahasa Indonesia" : "🇬🇧 English"}
                     </span>
                   </div>
-                  <span className="text-orange-400 font-bold text-[11px] flex items-center gap-1">
+                  <span className="text-red-400 font-bold text-[11px] flex items-center gap-1">
                     <Edit3 className="w-3.5 h-3.5" /> Klik / Edit Teks & Foto Produk
                   </span>
                 </div>
@@ -2487,7 +2501,7 @@ export default function AdminDashboard() {
                             ? setProductsForm({ ...productsForm, header_title_id: e.target.value })
                             : setProductsForm({ ...productsForm, header_title_en: e.target.value })
                         }
-                        className="w-full text-2xl sm:text-4xl font-extrabold text-slate-950 text-center tracking-tight bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#F06B33]"
+                        className="w-full text-2xl sm:text-4xl font-extrabold text-slate-950 text-center tracking-tight bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#E31E24]"
                       />
                     </div>
 
@@ -2501,7 +2515,7 @@ export default function AdminDashboard() {
                             ? setProductsForm({ ...productsForm, header_subtitle_id: e.target.value })
                             : setProductsForm({ ...productsForm, header_subtitle_en: e.target.value })
                         }
-                        className="w-full text-sm sm:text-base text-slate-600 font-medium text-center bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#F06B33]"
+                        className="w-full text-sm sm:text-base text-slate-600 font-medium text-center bg-white border border-slate-300 rounded-xl p-3 focus:outline-none focus:border-[#E31E24]"
                       />
                     </div>
                   </div>
@@ -2510,14 +2524,14 @@ export default function AdminDashboard() {
                   <div className="border-t border-slate-200/80 pt-10 space-y-12">
                     <div className="flex items-center justify-between">
                       <h4 className="text-base font-extrabold text-slate-950 flex items-center gap-2">
-                        <ShoppingBag className="w-5 h-5 text-[#F06B33]" />
+                        <ShoppingBag className="w-5 h-5 text-[#E31E24]" />
                         <span>Daftar Produk Arang Ekspor ({(productsForm.products_json || []).length} Produk)</span>
                       </h4>
 
                       <button
                         type="button"
                         onClick={addProductItem}
-                        className="px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
+                        className="px-4 py-2 rounded-xl bg-red-600 hover:bg-red-700 text-white text-xs font-bold flex items-center gap-1.5 transition-all shadow-md cursor-pointer"
                       >
                         <Plus className="w-4 h-4" />
                         <span>Tambah Produk Baru</span>
@@ -2527,7 +2541,7 @@ export default function AdminDashboard() {
                     {(productsForm.products_json || []).map((prod: any, pIdx: number) => (
                       <div
                         key={pIdx}
-                        className="bg-white border-2 border-slate-200 hover:border-orange-300 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6 relative transition-all"
+                        className="bg-white border-2 border-slate-200 hover:border-red-300 rounded-3xl p-6 sm:p-8 shadow-sm space-y-6 relative transition-all"
                       >
                         {/* Delete Product Button */}
                         <button
@@ -2552,7 +2566,7 @@ export default function AdminDashboard() {
                             <div className="relative aspect-square w-full rounded-2xl overflow-hidden bg-slate-50 border border-slate-200 p-4 flex items-center justify-center">
                               {/* eslint-disable-next-line @next/next/no-img-element */}
                               <img
-                                src={prod.image || prod.local_src || "/products/shisha.png"}
+                                src={getAdminImgUrl(prod.image || prod.local_src, "/products/shisha.png")}
                                 alt="Product Preview"
                                 onError={(e) => {
                                   const target = e.currentTarget as HTMLImageElement;
@@ -2574,7 +2588,7 @@ export default function AdminDashboard() {
                             </div>
 
                             {/* Direct File Upload Button */}
-                            <label className="w-full py-2.5 px-3 rounded-xl bg-orange-50 hover:bg-orange-100 border border-orange-200 text-[#F06B33] text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
+                            <label className="w-full py-2.5 px-3 rounded-xl bg-red-50 hover:bg-red-100 border border-red-200 text-[#E31E24] text-xs font-bold flex items-center justify-center gap-1.5 transition-colors cursor-pointer">
                               <UploadCloud className="w-4 h-4" />
                               <span>Upload Foto Produk Baru</span>
                               <input
@@ -2598,7 +2612,7 @@ export default function AdminDashboard() {
                                   updated[pIdx].image = e.target.value;
                                   setProductsForm({ ...productsForm, products_json: updated });
                                 }}
-                                className="w-full text-xs font-mono text-slate-600 bg-slate-50 border border-slate-200 rounded-lg p-2 focus:bg-white focus:border-[#F06B33]"
+                                className="w-full text-xs font-mono text-slate-600 bg-slate-50 border border-slate-200 rounded-lg p-2 focus:bg-white focus:border-[#E31E24]"
                               />
                             </div>
                           </div>
@@ -2616,7 +2630,7 @@ export default function AdminDashboard() {
                                     updated[pIdx].number = e.target.value;
                                     setProductsForm({ ...productsForm, products_json: updated });
                                   }}
-                                  className="w-full text-sm font-black text-[#F06B33] bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-mono"
+                                  className="w-full text-sm font-black text-[#E31E24] bg-slate-50 border border-slate-300 rounded-xl p-2.5 font-mono"
                                 />
                               </div>
 
@@ -2630,7 +2644,7 @@ export default function AdminDashboard() {
                                     updated[pIdx].categoryTitle = e.target.value;
                                     setProductsForm({ ...productsForm, products_json: updated });
                                   }}
-                                  className="w-full text-sm font-bold text-amber-600 bg-slate-50 border border-slate-300 rounded-xl p-2.5 uppercase"
+                                  className="w-full text-sm font-bold text-red-600 bg-slate-50 border border-slate-300 rounded-xl p-2.5 uppercase"
                                 />
                               </div>
                             </div>
@@ -2646,7 +2660,7 @@ export default function AdminDashboard() {
                                   else updated[pIdx].title_en = e.target.value;
                                   setProductsForm({ ...productsForm, products_json: updated });
                                 }}
-                                className="w-full text-base font-extrabold text-slate-950 bg-slate-50 border border-slate-300 rounded-xl p-3 focus:bg-white focus:border-[#F06B33]"
+                                className="w-full text-base font-extrabold text-slate-950 bg-slate-50 border border-slate-300 rounded-xl p-3 focus:bg-white focus:border-[#E31E24]"
                               />
                             </div>
 
@@ -2676,7 +2690,7 @@ export default function AdminDashboard() {
                                   else updated[pIdx].description_en = e.target.value;
                                   setProductsForm({ ...productsForm, products_json: updated });
                                 }}
-                                className="w-full text-xs text-slate-600 bg-slate-50 border border-slate-300 rounded-xl p-3 focus:bg-white focus:border-[#F06B33]"
+                                className="w-full text-xs text-slate-600 bg-slate-50 border border-slate-300 rounded-xl p-3 focus:bg-white focus:border-[#E31E24]"
                               />
                             </div>
 
@@ -2687,7 +2701,7 @@ export default function AdminDashboard() {
                                 <button
                                   type="button"
                                   onClick={() => addProdSpec(pIdx)}
-                                  className="text-[10px] font-bold text-[#F06B33] hover:underline flex items-center gap-1 cursor-pointer"
+                                  className="text-[10px] font-bold text-[#E31E24] hover:underline flex items-center gap-1 cursor-pointer"
                                 >
                                   <Plus className="w-3 h-3" /> Tambah Baris Spek
                                 </button>

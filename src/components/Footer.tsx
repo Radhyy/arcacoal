@@ -37,7 +37,7 @@ export default function Footer() {
   return (
     <footer id="contact" className="relative bg-slate-950 text-white pt-16 pb-12 overflow-hidden border-t border-slate-900">
       {/* Top Ambient Glow */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[350px] bg-gradient-to-b from-[#F06B33]/10 via-orange-500/5 to-transparent rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[350px] bg-gradient-to-b from-[#E31E24]/10 via-red-600/5 to-transparent rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full">
         {/* Footer Navigation Columns */}
@@ -75,7 +75,7 @@ export default function Footer() {
             </p>
 
             <div className="flex items-center gap-3 p-3.5 rounded-xl bg-slate-900 border border-slate-800">
-              <ShieldCheck className="w-5 h-5 text-[#F06B33] shrink-0" />
+              <ShieldCheck className="w-5 h-5 text-[#E31E24] shrink-0" />
               <span className="text-xs font-semibold text-slate-300">
                 {t("Verified Export Company & ISO Compliant Factory", "Perusahaan Ekspor Terverifikasi & Pabrik Standar ISO")}
               </span>
@@ -97,7 +97,7 @@ export default function Footer() {
                 { name: t("Company Legality", "Legalitas Usaha"), href: "#legality" },
               ].map((link, idx) => (
                 <li key={idx}>
-                  <Link href={link.href} className="hover:text-orange-400 transition-colors inline-block hover:translate-x-1 duration-200">
+                  <Link href={link.href} className="hover:text-red-400 transition-colors inline-block hover:translate-x-1 duration-200">
                     {link.name}
                   </Link>
                 </li>
@@ -133,7 +133,7 @@ export default function Footer() {
             <ul className="space-y-4 text-sm">
               <li>
                 <p className="text-xs text-slate-500 font-medium mb-0.5">Email</p>
-                <a href="mailto:hello@arcacoal.com" className="font-bold text-slate-200 hover:text-orange-400 transition-colors inline-block hover:translate-x-1 duration-200">
+                <a href="mailto:hello@arcacoal.com" className="font-bold text-slate-200 hover:text-red-400 transition-colors inline-block hover:translate-x-1 duration-200">
                   hello@arcacoal.com
                 </a>
               </li>

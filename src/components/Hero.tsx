@@ -62,8 +62,8 @@ export default function Hero() {
           <defs>
             <linearGradient id="shapeAiGlow" x1="0%" y1="0%" x2="0%" y2="100%">
               <stop offset="0%" stopColor="#FCFCFC" stopOpacity="0" />
-              <stop offset="35%" stopColor="#FFF4EF" stopOpacity="0.75" />
-              <stop offset="70%" stopColor="#FFE7DA" stopOpacity="0.9" />
+              <stop offset="35%" stopColor="#FFF0F1" stopOpacity="0.75" />
+              <stop offset="70%" stopColor="#FFE4E6" stopOpacity="0.85" />
               <stop offset="100%" stopColor="#FCFCFC" stopOpacity="1" />
             </linearGradient>
           </defs>
@@ -89,11 +89,11 @@ export default function Hero() {
           >
             <span className="block">
               {t("Global Energy", "Energi Global")}{" "}
-              <span className="text-[#F06B33]">{t("Powered by", "Didukung")}</span>
+              <span className="text-[#E31E24]">{t("Powered by", "Didukung")}</span>
             </span>
             <span className="block mt-1 sm:mt-2">
               {t("Sustainable", "Arang Ramah")}{" "}
-              <span className="text-[#F06B33]">{t("Charcoal", "Lingkungan")}</span>
+              <span className="text-[#E31E24]">{t("Charcoal", "Lingkungan")}</span>
             </span>
           </motion.h1>
 
@@ -138,11 +138,11 @@ export default function Hero() {
                 <span>{t("ISO & Lab Tested Certified", "Tersertifikasi ISO & Uji Lab")}</span>
               </div>
               <div className="flex items-center gap-2 hover:text-slate-900 transition-colors group">
-                <Award className="w-4 h-4 text-amber-500 group-hover:scale-110 transition-transform shrink-0" />
+                <Award className="w-4 h-4 text-[#E31E24] group-hover:scale-110 transition-transform shrink-0" />
                 <span>{t("100% Pure Coconut Shell", "100% Batok Kelapa Murni")}</span>
               </div>
               <div className="flex items-center gap-2 hover:text-slate-900 transition-colors group">
-                <Globe className="w-4 h-4 text-orange-600 group-hover:scale-110 transition-transform shrink-0" />
+                <Globe className="w-4 h-4 text-red-700 group-hover:scale-110 transition-transform shrink-0" />
                 <span>{t("Direct Shipments From Indonesia", "Pengiriman Langsung Dari Indonesia")}</span>
               </div>
             </motion.div>

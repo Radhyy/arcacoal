@@ -141,20 +141,20 @@ export default function Navbar() {
                       <span>{link.name}</span>
                       <ChevronDown
                         className={`w-3.5 h-3.5 text-slate-400 group-hover:text-slate-950 transition-transform duration-200 ${
-                          productsDropdownOpen ? "rotate-180 text-[#F06B33]" : ""
+                          productsDropdownOpen ? "rotate-180 text-[#E31E24]" : ""
                         }`}
                       />
-                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#F06B33] group-hover:w-full transition-all duration-200 rounded-full" />
+                      <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#E31E24] group-hover:w-full transition-all duration-200 rounded-full" />
                     </Link>
 
                     {/* Products Dropdown Menu Card */}
                     {productsDropdownOpen && (
                       <div className="absolute top-full left-0 mt-2 w-88 bg-white/98 backdrop-blur-xl border border-slate-200/90 shadow-2xl rounded-2xl p-3 z-50 transition-all duration-200 animate-in fade-in slide-in-from-top-2">
                         <div className="px-3 py-2 border-b border-slate-100 mb-2 flex items-center justify-between">
-                          <span className="text-[11px] font-black uppercase tracking-wider text-[#F06B33]">
+                          <span className="text-[11px] font-black uppercase tracking-wider text-[#E31E24]">
                             {t("Charcoal Product Range", "Rangkaian Produk Arang")}
                           </span>
-                          <Flame className="w-3.5 h-3.5 text-[#F06B33]" />
+                          <Flame className="w-3.5 h-3.5 text-[#E31E24]" />
                         </div>
 
                         <div className="space-y-1">
@@ -163,7 +163,7 @@ export default function Navbar() {
                               key={pIdx}
                               href={item.href}
                               onClick={() => setProductsDropdownOpen(false)}
-                              className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-orange-50/80 transition-colors group/item"
+                              className="flex items-center gap-3 p-2.5 rounded-xl hover:bg-red-50/80 transition-colors group/item"
                             >
                               <div className="w-10 h-10 rounded-lg bg-slate-50 border border-slate-100 p-1 flex items-center justify-center shrink-0">
                                 <Image
@@ -180,8 +180,8 @@ export default function Navbar() {
                                 />
                               </div>
                               <div className="flex flex-col">
-                                <span className="text-xs font-bold text-slate-950 group-hover/item:text-[#F06B33] transition-colors flex items-center gap-1.5">
-                                  <span className="font-mono text-[#F06B33]">{item.number}</span>
+                                <span className="text-xs font-bold text-slate-950 group-hover/item:text-[#E31E24] transition-colors flex items-center gap-1.5">
+                                  <span className="font-mono text-[#E31E24]">{item.number}</span>
                                   <span>{item.title}</span>
                                 </span>
                                 <span className="text-[11px] text-slate-500 font-medium line-clamp-1">
@@ -199,7 +199,7 @@ export default function Navbar() {
                             className="flex items-center justify-between w-full p-2.5 rounded-xl bg-slate-900 hover:bg-slate-950 text-xs font-bold text-white transition-all group/all"
                           >
                             <span>{t("Explore All Products & Specs", "Lihat Semua Produk & Spesifikasi")}</span>
-                            <ArrowRight className="w-3.5 h-3.5 text-orange-400 group-hover/all:translate-x-1 transition-transform" />
+                            <ArrowRight className="w-3.5 h-3.5 text-red-400 group-hover/all:translate-x-1 transition-transform" />
                           </Link>
                         </div>
                       </div>
@@ -212,7 +212,7 @@ export default function Navbar() {
                     className="relative text-sm font-medium text-slate-600 hover:text-slate-950 transition-colors duration-200 whitespace-nowrap py-1 group"
                   >
                     <span>{link.name}</span>
-                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#F06B33] group-hover:w-full transition-all duration-200 rounded-full" />
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#E31E24] group-hover:w-full transition-all duration-200 rounded-full" />
                   </Link>
                 )}
               </div>
@@ -222,7 +222,7 @@ export default function Navbar() {
           {/* Right Actions */}
           <div className="hidden lg:flex items-center gap-3 shrink-0">
             <div className="flex items-center gap-1 text-xs font-semibold text-slate-600 bg-slate-100/90 p-1 rounded-xl border border-slate-200/80 shrink-0">
-              <Globe className="w-3.5 h-3.5 text-orange-600 ml-1.5" />
+              <Globe className="w-3.5 h-3.5 text-red-700 ml-1.5" />
               <button
                 type="button"
                 onClick={() => setLang("en")}
@@ -240,7 +240,7 @@ export default function Navbar() {
                 onClick={() => setLang("id")}
                 className={`px-2 py-0.5 rounded-lg text-xs font-bold transition-all ${
                   lang === "id"
-                    ? "bg-white text-[#F06B33] shadow-2xs border border-slate-200/60"
+                    ? "bg-white text-[#E31E24] shadow-2xs border border-slate-200/60"
                     : "text-slate-500 hover:text-slate-900"
                 }`}
               >
@@ -299,7 +299,7 @@ export default function Navbar() {
                     onClick={() => setLang("id")}
                     className={`px-3 py-1 rounded-lg text-xs font-bold transition-all ${
                       lang === "id"
-                        ? "bg-white text-[#F06B33] shadow-2xs"
+                        ? "bg-white text-[#E31E24] shadow-2xs"
                         : "text-slate-500"
                     }`}
                   >

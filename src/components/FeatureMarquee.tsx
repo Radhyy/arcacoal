@@ -8,13 +8,13 @@ export default function FeatureMarquee() {
       icon: Flame,
       title: "Pure Sourcing",
       desc: "100% pure coconut from Indonesia's rich regions & top-grade hardwood.",
-      iconBg: "bg-orange-50 text-[#F06B33] border-orange-200/70",
+      iconBg: "bg-red-50 text-[#E31E24] border-red-200/70",
     },
     {
       icon: Factory,
       title: "Vast Factory Network",
       desc: "Integrated manufacturing facilities maintaining strict international standards.",
-      iconBg: "bg-amber-50 text-amber-600 border-amber-200/70",
+      iconBg: "bg-red-50 text-red-600 border-red-200/70",
     },
     {
       icon: Anchor,
@@ -44,7 +44,7 @@ export default function FeatureMarquee() {
       icon: Award,
       title: "Grade A+ Premium",
       desc: "Engineered specifically for premium Shisha, Hookah, and BBQ markets.",
-      iconBg: "bg-amber-50 text-amber-600 border-amber-200/70",
+      iconBg: "bg-red-50 text-red-600 border-red-200/70",
     },
   ];
 
@@ -52,7 +52,7 @@ export default function FeatureMarquee() {
   const marqueeList = [...cards, ...cards];
 
   return (
-    <section className="py-12 bg-gradient-to-b from-[#FCFCFC] via-orange-50/20 to-[#FCFCFC] overflow-hidden border-y border-slate-200/60 relative">
+    <section className="py-12 bg-gradient-to-b from-[#FCFCFC] via-red-50/20 to-[#FCFCFC] overflow-hidden border-y border-slate-200/60 relative">
       {/* Edge Fade Gradients */}
       <div className="absolute top-0 bottom-0 left-0 w-24 sm:w-40 bg-gradient-to-r from-[#FCFCFC] to-transparent z-10 pointer-events-none" />
       <div className="absolute top-0 bottom-0 right-0 w-24 sm:w-40 bg-gradient-to-l from-[#FCFCFC] to-transparent z-10 pointer-events-none" />
@@ -65,13 +65,13 @@ export default function FeatureMarquee() {
             return (
               <div
                 key={index}
-                className="w-80 sm:w-96 shrink-0 p-6 rounded-3xl bg-white border border-slate-200/80 shadow-md shadow-slate-900/5 hover:border-orange-300 transition-all duration-300 hover:-translate-y-1 group"
+                className="w-80 sm:w-96 shrink-0 p-6 rounded-3xl bg-white border border-slate-200/80 shadow-md shadow-slate-900/5 hover:border-red-300 transition-all duration-300 hover:-translate-y-1 group"
               >
                 <div className={`w-12 h-12 rounded-2xl ${card.iconBg} border flex items-center justify-center mb-4 transition-transform group-hover:scale-110 duration-300`}>
                   <Icon className="w-6 h-6" />
                 </div>
 
-                <h4 className="text-lg font-bold text-slate-950 mb-2 tracking-tight group-hover:text-[#F06B33] transition-colors">
+                <h4 className="text-lg font-bold text-slate-950 mb-2 tracking-tight group-hover:text-[#E31E24] transition-colors">
                   {card.title}
                 </h4>
 

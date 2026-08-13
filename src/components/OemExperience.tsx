@@ -103,7 +103,7 @@ export default function OemExperience() {
   return (
     <section id="oem" className="relative py-24 lg:py-32 bg-[#FCFCFC] overflow-hidden border-t border-slate-200/60">
       {/* Background Accent Glow */}
-      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-orange-100/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-red-100/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full">
         <div className="grid lg:grid-cols-12 gap-12 lg:gap-16 items-center">
@@ -158,7 +158,7 @@ export default function OemExperience() {
             {/* Subtitle Paragraph */}
             <motion.p variants={itemVariants} className="text-base sm:text-lg text-slate-700 font-normal leading-relaxed mb-10">
               {isEn ? oemData.description_en : oemData.description_id}{" "}
-              <Link href="#contact" className="text-[#F06B33] font-semibold underline underline-offset-4 hover:text-orange-600 transition-colors">
+              <Link href="#contact" className="text-[#E31E24] font-semibold underline underline-offset-4 hover:text-red-700 transition-colors">
                 {isEn ? oemData.link_text_en : oemData.link_text_id}
               </Link>
             </motion.p>
@@ -172,7 +172,7 @@ export default function OemExperience() {
                   transition={{ type: "spring", stiffness: 350, damping: 25 }}
                   className="flex flex-col items-start group cursor-pointer"
                 >
-                  <h3 className="text-xl sm:text-2xl font-extrabold text-[#F06B33] tracking-tight mb-2 group-hover:translate-x-1 transition-transform">
+                  <h3 className="text-xl sm:text-2xl font-extrabold text-[#E31E24] tracking-tight mb-2 group-hover:translate-x-1 transition-transform">
                     {pillar.title}
                   </h3>
                   <p className="text-base text-slate-600 font-normal leading-relaxed">

@@ -128,7 +128,7 @@ export default function PerformanceHighlights() {
   return (
     <section id="performance" className="relative py-24 lg:py-32 bg-[#FCFCFC] overflow-hidden border-t border-slate-200/60">
       {/* Ambient Accent Glows */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] bg-gradient-to-tr from-orange-100/30 via-amber-50/20 to-transparent rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[550px] bg-gradient-to-tr from-red-100/30 via-red-50/20 to-transparent rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full">
         {/* Section Header */}
@@ -140,14 +140,14 @@ export default function PerformanceHighlights() {
           className="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 lg:mb-20"
         >
           <div className="flex items-center gap-3 mb-4">
-            <span className="text-3xl font-black text-[#F06B33] font-mono">02.</span>
-            <span className="px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-xs font-bold text-[#F06B33] uppercase tracking-widest">
+            <span className="text-3xl font-black text-[#E31E24] font-mono">02.</span>
+            <span className="px-3.5 py-1.5 rounded-full bg-red-50 border border-red-200/80 text-xs font-bold text-[#E31E24] uppercase tracking-widest">
               {isEn ? perfData.badge_en : perfData.badge_id}
             </span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-950 tracking-tight leading-[1.15] mb-4">
-            {isEn ? perfData.header_title_en : perfData.header_title_id}<span className="text-[#F06B33]">.</span>
+            {isEn ? perfData.header_title_en : perfData.header_title_id}<span className="text-[#E31E24]">.</span>
           </h2>
 
           <p className="text-sm sm:text-base font-bold text-slate-600 tracking-wider uppercase">
@@ -169,14 +169,14 @@ export default function PerformanceHighlights() {
               variants={cardVariants}
               whileHover={{ y: -6, scale: 1.015 }}
               transition={{ type: "spring", stiffness: 350, damping: 25 }}
-              className="p-8 sm:p-10 rounded-3xl bg-white border border-slate-200/80 shadow-md shadow-slate-900/5 hover:border-orange-300 hover:shadow-xl hover:shadow-orange-500/5 transition-colors duration-300 group relative overflow-hidden flex flex-col justify-between cursor-pointer"
+              className="p-8 sm:p-10 rounded-3xl bg-white border border-slate-200/80 shadow-md shadow-slate-900/5 hover:border-red-300 hover:shadow-xl hover:shadow-red-600/5 transition-colors duration-300 group relative overflow-hidden flex flex-col justify-between cursor-pointer"
             >
-              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#F06B33] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-[#E31E24] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
 
               <div>
                 {/* Top Icon & Badge Row */}
                 <div className="flex items-center justify-between mb-6">
-                  <div className="p-3 rounded-2xl bg-orange-50/50 border border-orange-100 group-hover:scale-110 group-hover:bg-orange-100/60 transition-all duration-300 flex items-center justify-center">
+                  <div className="p-3 rounded-2xl bg-red-50/50 border border-red-100 group-hover:scale-110 group-hover:bg-red-100/60 transition-all duration-300 flex items-center justify-center">
                     <Image
                       src={item.icon}
                       alt={item.title}
@@ -187,13 +187,13 @@ export default function PerformanceHighlights() {
                     />
                   </div>
 
-                  <span className="px-3 py-1 rounded-full bg-slate-100 border border-slate-200/80 text-xs font-semibold text-slate-700 group-hover:border-orange-200 group-hover:text-slate-900 transition-colors">
+                  <span className="px-3 py-1 rounded-full bg-slate-100 border border-slate-200/80 text-xs font-semibold text-slate-700 group-hover:border-red-200 group-hover:text-slate-900 transition-colors">
                     {item.badge}
                   </span>
                 </div>
 
                 {/* Title */}
-                <h3 className="text-xl sm:text-2xl font-black text-slate-950 tracking-tight mb-4 group-hover:text-[#F06B33] transition-colors">
+                <h3 className="text-xl sm:text-2xl font-black text-slate-950 tracking-tight mb-4 group-hover:text-[#E31E24] transition-colors">
                   {item.title}
                 </h3>
 

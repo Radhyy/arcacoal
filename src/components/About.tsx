@@ -103,7 +103,7 @@ export default function About() {
   return (
     <section id="about" className="relative py-20 lg:py-28 bg-[#FCFCFC] overflow-hidden">
       {/* Background Accent Glow */}
-      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-orange-100/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-0 w-[500px] h-[500px] bg-red-100/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full">
         {/* Section Header */}
@@ -114,16 +114,16 @@ export default function About() {
           variants={headerVariants}
           className="flex flex-col items-center text-center max-w-3xl mx-auto mb-16 lg:mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 mb-4">
-            <span className="h-2 w-2 rounded-full bg-[#F06B33]" />
-            <span className="text-xs font-bold tracking-widest text-[#F06B33] uppercase">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 border border-red-200/80 mb-4">
+            <span className="h-2 w-2 rounded-full bg-[#E31E24]" />
+            <span className="text-xs font-bold tracking-widest text-[#E31E24] uppercase">
               {isEn ? aboutData.badge_en : aboutData.badge_id}
             </span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-950 tracking-tight leading-[1.18] mb-4">
             {isEn ? aboutData.title_en : aboutData.title_id}{" "}
-            <span className="text-[#F06B33]">
+            <span className="text-[#E31E24]">
               {isEn ? "Charcoal Briquettes" : "Dari Indonesia"}
             </span>
           </h2>
@@ -181,7 +181,7 @@ export default function About() {
                   transition={{ delay: 0.2 + index * 0.1, duration: 0.6 }}
                   className="flex items-center gap-3 group"
                 >
-                  <CheckCircle2 className="w-5 h-5 text-[#F06B33] shrink-0 group-hover:scale-110 transition-transform" />
+                  <CheckCircle2 className="w-5 h-5 text-[#E31E24] shrink-0 group-hover:scale-110 transition-transform" />
                   <span className="text-sm font-semibold text-slate-800">{text}</span>
                 </motion.div>
               ))}
@@ -222,7 +222,7 @@ export default function About() {
             <motion.div
               variants={itemVariants}
               whileHover={{ scale: 1.01 }}
-              className="pl-6 border-l-4 border-[#F06B33] py-3 my-2 bg-orange-50/40 rounded-r-2xl shadow-2xs transition-all"
+              className="pl-6 border-l-4 border-[#E31E24] py-3 my-2 bg-red-50/40 rounded-r-2xl shadow-2xs transition-all"
             >
               <p className="text-base sm:text-lg text-slate-800 font-medium leading-relaxed italic">
                 &ldquo;{isEn ? aboutData.quote_en : aboutData.quote_id}&rdquo;
@@ -240,7 +240,7 @@ export default function About() {
                   className="btn-dark-glossy inline-flex items-center gap-2.5 px-7 py-3.5 text-sm font-semibold text-white rounded-xl shadow-lg transition-all group"
                 >
                   <span>{t("Partner With Us", "Bermitra Dengan Kami")}</span>
-                  <ArrowRight className="w-4 h-4 text-orange-400 group-hover:translate-x-1.5 transition-transform duration-300" />
+                  <ArrowRight className="w-4 h-4 text-red-400 group-hover:translate-x-1.5 transition-transform duration-300" />
                 </Link>
               </motion.div>
             </motion.div>

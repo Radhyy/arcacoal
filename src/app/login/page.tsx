@@ -85,9 +85,9 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#FCFCFC] text-slate-950 flex flex-col justify-between relative overflow-hidden selection:bg-orange-500 selection:text-white">
+    <main className="min-h-screen bg-[#FCFCFC] text-slate-950 flex flex-col justify-between relative overflow-hidden selection:bg-red-600 selection:text-white">
       {/* Ambient Background Radial Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-orange-100/25 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-red-100/25 rounded-full blur-3xl pointer-events-none" />
 
       {/* Header Bar */}
       <header className="relative z-10 w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
@@ -109,7 +109,7 @@ export default function LoginPage() {
 
         <Link
           href="/"
-          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-200/90 text-xs sm:text-sm font-semibold text-slate-700 shadow-2xs hover:border-orange-200 hover:text-[#F06B33] transition-all"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-white border border-slate-200/90 text-xs sm:text-sm font-semibold text-slate-700 shadow-2xs hover:border-red-200 hover:text-[#E31E24] transition-all"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>{t("Back to Website", "Kembali ke Website")}</span>
@@ -190,7 +190,7 @@ export default function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="admin@arcacoal.com"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#F06B33] focus:ring-2 focus:ring-[#F06B33]/15 focus:bg-white transition-all"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#E31E24] focus:ring-2 focus:ring-[#E31E24]/15 focus:bg-white transition-all"
                 />
               </div>
             </div>
@@ -201,7 +201,7 @@ export default function LoginPage() {
                 <label htmlFor="password" className="block text-xs font-bold uppercase tracking-wider text-slate-800">
                   {t("Password", "Kata Sandi")}
                 </label>
-                <Link href="#" className="text-xs font-semibold text-[#F06B33] hover:underline">
+                <Link href="#" className="text-xs font-semibold text-[#E31E24] hover:underline">
                   {t("Forgot password?", "Lupa kata sandi?")}
                 </Link>
               </div>
@@ -216,7 +216,7 @@ export default function LoginPage() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••••••"
-                  className="w-full pl-10 pr-10 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#F06B33] focus:ring-2 focus:ring-[#F06B33]/15 focus:bg-white transition-all"
+                  className="w-full pl-10 pr-10 py-3 rounded-xl bg-slate-50 border border-slate-200 text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:border-[#E31E24] focus:ring-2 focus:ring-[#E31E24]/15 focus:bg-white transition-all"
                 />
                 <button
                   type="button"
@@ -235,7 +235,7 @@ export default function LoginPage() {
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
-                  className="w-4 h-4 rounded border-slate-300 text-[#F06B33] focus:ring-[#F06B33] cursor-pointer"
+                  className="w-4 h-4 rounded border-slate-300 text-[#E31E24] focus:ring-[#E31E24] cursor-pointer"
                 />
                 <span className="text-xs font-semibold text-slate-700">
                   {t("Remember for 30 days", "Ingat selama 30 hari")}
@@ -259,7 +259,7 @@ export default function LoginPage() {
               ) : (
                 <>
                   <span>{t("Sign In to Portal", "Masuk ke Portal")}</span>
-                  <ArrowRight className="w-4 h-4 text-orange-400" />
+                  <ArrowRight className="w-4 h-4 text-red-400" />
                 </>
               )}
             </motion.button>

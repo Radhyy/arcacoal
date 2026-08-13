@@ -156,7 +156,7 @@ export default function Gallery() {
   return (
     <section id="gallery" className="relative py-20 lg:py-32 bg-[#FCFCFC] overflow-hidden border-t border-slate-200/60">
       {/* Background Accent Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-orange-100/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[500px] bg-red-100/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full">
         {/* Section Header */}
@@ -168,14 +168,14 @@ export default function Gallery() {
           className="flex flex-col items-center text-center max-w-3xl mx-auto mb-12 sm:mb-16 lg:mb-20"
         >
           <div className="flex items-center gap-2 sm:gap-3 mb-4">
-            <span className="text-2xl sm:text-3xl font-black text-[#F06B33] font-mono">03.</span>
-            <span className="px-3 sm:px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-[10px] sm:text-xs font-bold text-[#F06B33] uppercase tracking-widest whitespace-nowrap">
+            <span className="text-2xl sm:text-3xl font-black text-[#E31E24] font-mono">03.</span>
+            <span className="px-3 sm:px-3.5 py-1.5 rounded-full bg-red-50 border border-red-200/80 text-[10px] sm:text-xs font-bold text-[#E31E24] uppercase tracking-widest whitespace-nowrap">
               {isEn ? galleryData.badge_en : galleryData.badge_id}
             </span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-950 tracking-tight leading-[1.15] mb-4">
-            {isEn ? galleryData.header_title_en : galleryData.header_title_id}<span className="text-[#F06B33]">.</span>
+            {isEn ? galleryData.header_title_en : galleryData.header_title_id}<span className="text-[#E31E24]">.</span>
           </h2>
 
           <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
@@ -205,7 +205,7 @@ export default function Gallery() {
                 whileHover={{ y: -6, scale: 1.025 }}
                 transition={{ type: "spring", stiffness: 350, damping: 25 }}
                 onClick={() => setActiveImage(displaySrc)}
-                className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 border border-slate-200/90 shadow-md shadow-slate-900/5 group cursor-pointer aspect-[3/4] hover:shadow-xl hover:border-orange-300"
+                className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-slate-900 border border-slate-200/90 shadow-md shadow-slate-900/5 group cursor-pointer aspect-[3/4] hover:shadow-xl hover:border-red-300"
               >
                 {/* HTML <img> tag with automatic failover fallback if ImgBB SSL/network fails */}
                 {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -227,12 +227,12 @@ export default function Gallery() {
 
                 {/* Top Zoom Icon */}
                 <div className="absolute top-2.5 right-2.5 sm:top-4 sm:right-4 p-1.5 sm:p-2.5 rounded-lg sm:rounded-xl bg-white/80 backdrop-blur-md border border-white/50 text-slate-900 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:scale-100 scale-90 pointer-events-none">
-                  <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#F06B33]" />
+                  <Maximize2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-[#E31E24]" />
                 </div>
 
                 {/* Bottom Caption Box */}
                 <div className="absolute bottom-0 left-0 right-0 p-3 sm:p-5 transform translate-y-1 sm:translate-y-2 group-hover:translate-y-0 transition-transform duration-300 pointer-events-none">
-                  <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-orange-500/90 backdrop-blur-xs text-[8px] sm:text-[10px] font-bold text-white uppercase tracking-wider mb-1 inline-block">
+                  <span className="px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-md bg-red-600/90 backdrop-blur-xs text-[8px] sm:text-[10px] font-bold text-white uppercase tracking-wider mb-1 inline-block">
                     {photoCategory}
                   </span>
                   <h4 className="text-xs sm:text-base font-bold text-white leading-snug line-clamp-2">
@@ -257,7 +257,7 @@ export default function Gallery() {
               className="btn-dark-glossy w-full sm:w-auto inline-flex items-center justify-center gap-2.5 sm:gap-3 px-6 sm:px-8 py-3.5 sm:py-4 text-xs sm:text-base font-bold text-white rounded-xl shadow-xl transition-all duration-300 group"
             >
               <span>{isEn ? galleryData.btn_text_en : galleryData.btn_text_id}</span>
-              <ArrowRight className="w-4 h-4 text-orange-400 group-hover:translate-x-1.5 transition-transform duration-300" />
+              <ArrowRight className="w-4 h-4 text-red-400 group-hover:translate-x-1.5 transition-transform duration-300" />
             </Link>
           </motion.div>
         </div>
@@ -296,7 +296,7 @@ export default function Gallery() {
 
               <button
                 onClick={() => setActiveImage(null)}
-                className="absolute top-[#F06B33] right-3 sm:top-4 sm:right-4 p-2.5 sm:p-3 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-md border border-white/30 transition-colors cursor-pointer"
+                className="absolute top-[#E31E24] right-3 sm:top-4 sm:right-4 p-2.5 sm:p-3 rounded-full bg-white/20 hover:bg-white/40 text-white backdrop-blur-md border border-white/30 transition-colors cursor-pointer"
               >
                 <X className="w-5 h-5 sm:w-6 sm:h-6" />
               </button>

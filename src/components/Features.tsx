@@ -105,7 +105,7 @@ export default function Features() {
   return (
     <section id="specs" className="relative py-20 lg:py-28 bg-[#FCFCFC] overflow-hidden border-t border-slate-100">
       {/* Background Accent Ambient Glow */}
-      <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-orange-100/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 right-0 w-[500px] h-[500px] bg-red-100/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 lg:px-12 w-full">
         {/* Section Header */}
@@ -116,9 +116,9 @@ export default function Features() {
           variants={headerVariants}
           className="flex flex-col items-center text-center max-w-3xl mx-auto mb-16"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 mb-4">
-            <span className="h-2 w-2 rounded-full bg-[#F06B33]" />
-            <span className="text-xs font-bold tracking-widest text-[#F06B33] uppercase">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 border border-red-200/80 mb-4">
+            <span className="h-2 w-2 rounded-full bg-[#E31E24]" />
+            <span className="text-xs font-bold tracking-widest text-[#E31E24] uppercase">
               {isEn ? featuresData.badge_en : featuresData.badge_id}
             </span>
           </div>
@@ -143,7 +143,7 @@ export default function Features() {
             className="lg:col-span-7 flex flex-col items-start"
           >
             <motion.div variants={childVariants} className="flex items-center gap-3 mb-4">
-              <span className="text-3xl sm:text-4xl font-black text-[#F06B33] font-mono">
+              <span className="text-3xl sm:text-4xl font-black text-[#E31E24] font-mono">
                 {item.number}
               </span>
             </motion.div>
@@ -164,7 +164,7 @@ export default function Features() {
             <motion.div variants={childVariants} className="grid sm:grid-cols-2 gap-3.5 w-full pt-4 border-t border-slate-200/70">
               {item.badges.map((badge, bIdx) => (
                 <div key={bIdx} className="flex items-center gap-2.5 group">
-                  <CheckCircle2 className="w-4 h-4 text-[#F06B33] shrink-0 group-hover:scale-110 transition-transform" />
+                  <CheckCircle2 className="w-4 h-4 text-[#E31E24] shrink-0 group-hover:scale-110 transition-transform" />
                   <span className="text-sm font-semibold text-slate-800">{badge}</span>
                 </div>
               ))}

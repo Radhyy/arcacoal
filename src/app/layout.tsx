@@ -126,7 +126,7 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-[#FCFCFC] text-slate-950 font-sans antialiased min-h-screen selection:bg-orange-500 selection:text-white">
+      <body className="bg-[#FCFCFC] text-slate-950 font-sans antialiased min-h-screen selection:bg-red-600 selection:text-white">
         <LanguageProvider>
           <SmoothScroll>{children}</SmoothScroll>
         </LanguageProvider>

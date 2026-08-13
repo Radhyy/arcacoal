@@ -162,25 +162,25 @@ export default function ProductsPage() {
   const productsList = Array.isArray(productsData.products_json) ? productsData.products_json : [];
 
   return (
-    <main className="min-h-screen bg-[#FCFCFC] text-slate-950 selection:bg-orange-500 selection:text-white">
+    <main className="min-h-screen bg-[#FCFCFC] text-slate-950 selection:bg-red-600 selection:text-white">
       <Navbar />
 
       <section className="relative pt-32 pb-24 px-6 lg:px-12 max-w-7xl mx-auto w-full">
         {/* Background Ambient Glow */}
-        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-orange-100/20 rounded-full blur-3xl pointer-events-none" />
+        <div className="absolute top-20 left-1/2 -translate-x-1/2 w-[900px] h-[500px] bg-red-100/20 rounded-full blur-3xl pointer-events-none" />
 
         <div className="relative z-10 flex flex-col items-center text-center mb-16 lg:mb-24">
           {/* Breadcrumb Navigation Pill Bar */}
-          <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white border border-slate-200/90 shadow-sm text-sm font-medium text-slate-700 mb-8 hover:border-orange-200 transition-colors">
+          <div className="inline-flex items-center gap-2.5 px-5 py-2.5 rounded-full bg-white border border-slate-200/90 shadow-sm text-sm font-medium text-slate-700 mb-8 hover:border-red-200 transition-colors">
             <Link
               href="/"
-              className="hover:text-[#F06B33] transition-colors flex items-center gap-1.5"
+              className="hover:text-[#E31E24] transition-colors flex items-center gap-1.5"
             >
               <Home className="w-4 h-4 text-slate-600" />
               <span>{t("Home", "Beranda")}</span>
             </Link>
             <ChevronRight className="w-3.5 h-3.5 text-slate-400" />
-            <span className="text-[#F06B33] font-bold">{t("Products & Specifications", "Produk & Spesifikasi")}</span>
+            <span className="text-[#E31E24] font-bold">{t("Products & Specifications", "Produk & Spesifikasi")}</span>
           </div>
 
           {/* Page Headline */}
@@ -233,7 +233,7 @@ export default function ProductsPage() {
 
                 {/* Middle Column */}
                 <div className="lg:col-span-4 flex flex-col items-start pr-0 lg:pr-2">
-                  <div className="text-5xl font-black text-[#F06B33] font-mono leading-none mb-3">
+                  <div className="text-5xl font-black text-[#E31E24] font-mono leading-none mb-3">
                     {prod.number || `0${idx + 1}.`}
                   </div>
 
@@ -252,7 +252,7 @@ export default function ProductsPage() {
 
                 {/* Right Column */}
                 <div className="lg:col-span-4 flex flex-col items-start">
-                  <h3 className="text-xl font-bold tracking-wider text-amber-500 uppercase mb-4">
+                  <h3 className="text-xl font-bold tracking-wider text-[#E31E24] uppercase mb-4">
                     {prod.categoryTitle}
                   </h3>
 
@@ -323,7 +323,7 @@ export default function ProductsPage() {
         <div className="mt-24 pt-10 border-t border-slate-200/70 flex flex-col sm:flex-row items-center justify-between gap-6">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-200/80 text-slate-800 text-sm font-bold shadow-2xs hover:border-orange-200 hover:text-[#F06B33] transition-all"
+            className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white border border-slate-200/80 text-slate-800 text-sm font-bold shadow-2xs hover:border-red-200 hover:text-[#E31E24] transition-all"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>{t("Back to Home", "Kembali ke Beranda")}</span>

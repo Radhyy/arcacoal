@@ -189,7 +189,7 @@ export default function Legality() {
   return (
     <section id="legality" className="relative py-20 lg:py-32 bg-[#FCFCFC] overflow-hidden border-t border-slate-200/60">
       {/* Background Ambient Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-orange-100/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[900px] h-[550px] bg-red-100/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full">
         {/* Section Header */}
@@ -201,14 +201,14 @@ export default function Legality() {
           className="flex flex-col items-center text-center max-w-3xl mx-auto mb-12 sm:mb-16 lg:mb-20"
         >
           <div className="flex items-center gap-2 sm:gap-3 mb-4">
-            <span className="text-2xl sm:text-3xl font-black text-[#F06B33] font-mono">04.</span>
-            <span className="px-3 sm:px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 text-[10px] sm:text-xs font-bold text-[#F06B33] uppercase tracking-widest whitespace-nowrap">
+            <span className="text-2xl sm:text-3xl font-black text-[#E31E24] font-mono">04.</span>
+            <span className="px-3 sm:px-3.5 py-1.5 rounded-full bg-red-50 border border-red-200/80 text-[10px] sm:text-xs font-bold text-[#E31E24] uppercase tracking-widest whitespace-nowrap">
               {isEn ? legalityData.badge_en : legalityData.badge_id}
             </span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-950 tracking-tight leading-[1.15] mb-4">
-            {isEn ? legalityData.header_title_en : legalityData.header_title_id}<span className="text-[#F06B33]">.</span>
+            {isEn ? legalityData.header_title_en : legalityData.header_title_id}<span className="text-[#E31E24]">.</span>
           </h2>
 
           <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
@@ -237,7 +237,7 @@ export default function Legality() {
                 transition={{ type: "spring", stiffness: 350, damping: 25 }}
                 className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs cursor-pointer"
               >
-                <div className="p-2.5 rounded-xl bg-orange-50 text-[#F06B33] shrink-0">
+                <div className="p-2.5 rounded-xl bg-red-50 text-[#E31E24] shrink-0">
                   <ShieldCheck className="w-6 h-6" />
                 </div>
                 <div>
@@ -251,7 +251,7 @@ export default function Legality() {
                 transition={{ type: "spring", stiffness: 350, damping: 25 }}
                 className="flex items-center gap-4 p-4 rounded-2xl bg-white border border-slate-200/80 shadow-2xs cursor-pointer"
               >
-                <div className="p-2.5 rounded-xl bg-amber-50 text-amber-600 shrink-0">
+                <div className="p-2.5 rounded-xl bg-red-50 text-red-600 shrink-0">
                   <FileText className="w-6 h-6" />
                 </div>
                 <div>
@@ -291,7 +291,7 @@ export default function Legality() {
                 whileHover={{ y: -6, scale: 1.03 }}
                 transition={{ type: "spring", stiffness: 350, damping: 25 }}
                 onClick={() => setActiveDoc(doc.src)}
-                className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-lg group cursor-pointer aspect-[3/4] hover:shadow-2xl hover:border-orange-300 flex flex-col justify-between p-2 sm:p-3"
+                className="relative rounded-2xl sm:rounded-3xl overflow-hidden bg-white border border-slate-200/90 shadow-lg group cursor-pointer aspect-[3/4] hover:shadow-2xl hover:border-red-300 flex flex-col justify-between p-2 sm:p-3"
               >
                 <div className="relative rounded-xl sm:rounded-2xl overflow-hidden w-full h-full bg-slate-50 border border-slate-100 flex items-center justify-center">
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -309,7 +309,7 @@ export default function Legality() {
                   />
                   <div className="absolute inset-0 bg-slate-950/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                     <div className="p-2 sm:p-3 rounded-full bg-white/90 text-slate-900 shadow-lg">
-                      <Maximize2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#F06B33]" />
+                      <Maximize2 className="w-4 h-4 sm:w-5 sm:h-5 text-[#E31E24]" />
                     </div>
                   </div>
                 </div>
@@ -331,7 +331,7 @@ export default function Legality() {
           transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1] as const }}
           className="p-6 sm:p-12 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/80 shadow-xl shadow-slate-900/5 relative overflow-hidden"
         >
-          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-orange-400 via-[#F06B33] to-amber-500" />
+          <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-red-400 via-[#E31E24] to-red-600" />
 
           <div className="max-w-3xl mb-8 sm:mb-10">
             <h3 className="text-xl sm:text-3xl font-extrabold text-slate-950 tracking-tight mb-2 sm:mb-3">
@@ -346,7 +346,7 @@ export default function Legality() {
             {/* Standard Documents Column */}
             <div>
               <h4 className="text-base sm:text-lg font-bold text-slate-950 mb-3 sm:mb-4 pb-2 border-b border-slate-200/70 flex items-center gap-2">
-                <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-[#F06B33]" />
+                <FileText className="w-4 h-4 sm:w-5 sm:h-5 text-[#E31E24]" />
                 <span>{isEn ? (legalityData.std_doc_title_en || "Standard Shipping Documents") : (legalityData.std_doc_title_id || "Dokumen Standar Pengiriman")}</span>
               </h4>
 
@@ -370,7 +370,7 @@ export default function Legality() {
             {/* Additional Documents Column */}
             <div>
               <h4 className="text-base sm:text-lg font-bold text-slate-950 mb-3 sm:mb-4 pb-2 border-b border-slate-200/70 flex items-center gap-2">
-                <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-[#F06B33]" />
+                <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-[#E31E24]" />
                 <span>{isEn ? (legalityData.add_doc_title_en || "Additional Compliance Docs") : (legalityData.add_doc_title_id || "Dokumen Tambahan Sesuai Negara")}</span>
               </h4>
 
@@ -384,7 +384,7 @@ export default function Legality() {
                     transition={{ delay: idx * 0.04, duration: 0.5 }}
                     className="flex items-center gap-2.5 sm:gap-3"
                   >
-                    <CheckCircle2 className="w-4 h-4 text-[#F06B33] shrink-0" />
+                    <CheckCircle2 className="w-4 h-4 text-[#E31E24] shrink-0" />
                     <span className="text-xs sm:text-sm font-semibold text-slate-800">{doc}</span>
                   </motion.li>
                 ))}

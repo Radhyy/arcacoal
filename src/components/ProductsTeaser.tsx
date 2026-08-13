@@ -126,7 +126,7 @@ export default function ProductsTeaser() {
   return (
     <section id="products" className="relative py-20 lg:py-32 bg-[#FCFCFC] overflow-hidden border-t border-slate-200/60">
       {/* Background Accent Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[500px] bg-orange-100/20 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[850px] h-[500px] bg-red-100/20 rounded-full blur-3xl pointer-events-none" />
 
       <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 w-full">
         {/* Section Header */}
@@ -137,16 +137,16 @@ export default function ProductsTeaser() {
           variants={headerVariants}
           className="flex flex-col items-center text-center max-w-3xl mx-auto mb-12 sm:mb-16 lg:mb-20"
         >
-          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200/80 mb-4">
-            <span className="h-2 w-2 rounded-full bg-[#F06B33]" />
-            <span className="text-xs font-bold tracking-widest text-[#F06B33] uppercase">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-red-50 border border-red-200/80 mb-4">
+            <span className="h-2 w-2 rounded-full bg-[#E31E24]" />
+            <span className="text-xs font-bold tracking-widest text-[#E31E24] uppercase">
               {t("Indonesian Export Lineup", "Lini Produk Ekspor Indonesia")}
             </span>
           </div>
 
           <h2 className="text-3xl sm:text-5xl font-extrabold text-slate-950 tracking-tight leading-[1.15] mb-4">
             {t("Our Charcoal", "Produk Arang")}{" "}
-            <span className="text-[#F06B33]">{t("Products", "Unggulan Kami")}</span>
+            <span className="text-[#E31E24]">{t("Products", "Unggulan Kami")}</span>
           </h2>
 
           <p className="text-base sm:text-lg text-slate-600 font-medium leading-relaxed">
@@ -179,7 +179,7 @@ export default function ProductsTeaser() {
                 variants={cardVariants}
                 whileHover={{ y: -6, scale: 1.02 }}
                 transition={{ type: "spring", stiffness: 350, damping: 25 }}
-                className="p-3.5 sm:p-5 lg:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-md hover:shadow-2xl hover:border-orange-300 transition-all duration-300 group flex flex-col justify-between"
+                className="p-3.5 sm:p-5 lg:p-6 rounded-2xl sm:rounded-3xl bg-white border border-slate-200/90 shadow-md hover:shadow-2xl hover:border-red-300 transition-all duration-300 group flex flex-col justify-between"
               >
                 <div>
                   {/* Image Container */}
@@ -197,18 +197,18 @@ export default function ProductsTeaser() {
                       }}
                       className="w-full h-full object-contain filter drop-shadow-xl group-hover:scale-108 transition-transform duration-500"
                     />
-                    <div className="absolute top-2 left-2 sm:top-3 sm:left-3 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-md bg-orange-500/90 text-[9px] sm:text-[10px] font-bold text-white uppercase tracking-wider line-clamp-1 max-w-[85%]">
+                    <div className="absolute top-2 left-2 sm:top-3 sm:left-3 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-md bg-red-600/90 text-[9px] sm:text-[10px] font-bold text-white uppercase tracking-wider line-clamp-1 max-w-[85%]">
                       {prod.type || "EXPORT GRADE"}
                     </div>
                   </div>
 
                   <div className="flex items-center gap-1.5 mb-1">
-                    <span className="text-sm sm:text-xl font-black text-[#F06B33] font-mono">
+                    <span className="text-sm sm:text-xl font-black text-[#E31E24] font-mono">
                       {prod.number || `0${index + 1}.`}
                     </span>
                   </div>
 
-                  <h3 className="text-xs sm:text-lg font-extrabold text-slate-950 tracking-tight mb-0.5 sm:mb-1 group-hover:text-[#F06B33] transition-colors leading-tight line-clamp-2">
+                  <h3 className="text-xs sm:text-lg font-extrabold text-slate-950 tracking-tight mb-0.5 sm:mb-1 group-hover:text-[#E31E24] transition-colors leading-tight line-clamp-2">
                     {title}
                   </h3>
                   <p className="text-[10px] sm:text-xs font-semibold text-slate-500 italic mb-2 sm:mb-3 leading-tight line-clamp-1">
@@ -221,7 +221,7 @@ export default function ProductsTeaser() {
 
                 <Link
                   href={`/products#${prod.id || ''}`}
-                  className="mt-1 sm:mt-2 inline-flex items-center justify-between w-full py-2 sm:py-2.5 px-2.5 sm:px-4 rounded-lg sm:rounded-xl bg-slate-50 hover:bg-orange-50 text-[11px] sm:text-xs font-bold text-slate-800 hover:text-[#F06B33] border border-slate-200/80 hover:border-orange-200 transition-all group/btn"
+                  className="mt-1 sm:mt-2 inline-flex items-center justify-between w-full py-2 sm:py-2.5 px-2.5 sm:px-4 rounded-lg sm:rounded-xl bg-slate-50 hover:bg-red-50 text-[11px] sm:text-xs font-bold text-slate-800 hover:text-[#E31E24] border border-slate-200/80 hover:border-red-200 transition-all group/btn"
                 >
                   <span>{t("View Specs", "Lihat Spesifikasi")}</span>
                   <ArrowRight className="w-3 h-3 sm:w-3.5 sm:h-3.5 group-hover/btn:translate-x-1 transition-transform" />
@@ -244,7 +244,7 @@ export default function ProductsTeaser() {
               className="btn-dark-glossy w-full sm:w-auto inline-flex items-center justify-center gap-2.5 sm:gap-3 px-6 sm:px-8 py-3.5 sm:py-4 text-xs sm:text-base font-bold text-white rounded-xl shadow-xl transition-all duration-300 group"
             >
               <span>{t("Explore All Products & Specifications", "Jelajahi Semua Produk & Spesifikasi Lengkap")}</span>
-              <ArrowRight className="w-4 h-4 text-orange-400 group-hover:translate-x-1.5 transition-transform duration-300" />
+              <ArrowRight className="w-4 h-4 text-red-400 group-hover:translate-x-1.5 transition-transform duration-300" />
             </Link>
           </motion.div>
         </div>
