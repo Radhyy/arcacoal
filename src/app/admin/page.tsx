@@ -279,6 +279,7 @@ export default function AdminDashboard() {
   const [newsAlert, setNewsAlert] = useState<{ type: "success" | "error"; msg: string } | null>(null);
   const [isUploadingNewsImg, setIsUploadingNewsImg] = useState(false);
   const [editingNewsId, setEditingNewsId] = useState<string | null>(null);
+  const [deleteConfirmNewsId, setDeleteConfirmNewsId] = useState<string | null>(null);
   const [newsForm, setNewsForm] = useState<any>({
     title_id: "",
     title_en: "",
@@ -924,12 +925,18 @@ export default function AdminDashboard() {
   };
 
   const handleDeleteNews = async (id: string) => {
-    if (!confirm("Apakah Anda yakin ingin menghapus berita ini?")) return;
+    setDeleteConfirmNewsId(id);
+  };
+
+  const confirmDeleteNews = async () => {
+    if (!deleteConfirmNewsId) return;
+    const id = deleteConfirmNewsId;
     try {
       const res = await fetch(`/api/news?id=${id}`, { method: "DELETE" });
       const data = await res.json();
       if (data.success) {
         setNewsItems(newsItems.filter(item => item.id !== id));
+        setDeleteConfirmNewsId(null);
       } else {
         alert(data.message || "Gagal menghapus berita");
       }
@@ -2969,7 +2976,7 @@ export default function AdminDashboard() {
                         <div key={item.id} className="group border border-slate-200 rounded-2xl overflow-hidden hover:border-red-300 hover:shadow-md transition-all flex flex-col bg-white">
                           <div className="w-full h-40 bg-slate-100 relative overflow-hidden">
                             {item.image_url ? (
-                              <img src={item.image_url} alt="" className="w-full h-full object-cover" />
+                              <img src={item.image_url.includes("i.ibb.co") ? `https://wsrv.nl/?url=${encodeURIComponent(item.image_url)}` : item.image_url} alt="" className="w-full h-full object-cover" />
                             ) : (
                               <div className="w-full h-full flex items-center justify-center text-slate-300">No Image</div>
                             )}
@@ -2990,6 +2997,31 @@ export default function AdminDashboard() {
                       ))}
                     </div>
                   )}
+                </div>
+              )}
+
+              
+              {/* DELETE CONFIRMATION MODAL */}
+              {deleteConfirmNewsId && (
+                <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
+                  <div className="bg-white rounded-3xl p-6 sm:p-8 w-full max-w-sm shadow-2xl border border-slate-200">
+                    <h3 className="text-xl font-extrabold text-slate-950 mb-2">Hapus Berita?</h3>
+                    <p className="text-sm text-slate-500 mb-8">Tindakan ini tidak dapat dibatalkan. Berita ini akan dihapus secara permanen dari database.</p>
+                    <div className="flex gap-3">
+                      <button
+                        onClick={() => setDeleteConfirmNewsId(null)}
+                        className="flex-1 px-4 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition-colors"
+                      >
+                        Batal
+                      </button>
+                      <button
+                        onClick={confirmDeleteNews}
+                        className="flex-1 px-4 py-3 bg-[#E31E24] hover:bg-red-700 text-white font-bold text-sm rounded-xl shadow-md transition-colors"
+                      >
+                        Ya, Hapus
+                      </button>
+                    </div>
+                  </div>
                 </div>
               )}
 
