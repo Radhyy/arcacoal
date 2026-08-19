@@ -215,7 +215,7 @@ export default function NewsDetail() {
             
             <div className="p-8 md:p-12">
               <div 
-                className="prose prose-lg prose-slate max-w-none text-slate-700"
+                className="prose prose-lg prose-slate max-w-none text-slate-700 break-words overflow-hidden w-full"
                 dangerouslySetInnerHTML={{ __html: content }}
               />
             </div>
