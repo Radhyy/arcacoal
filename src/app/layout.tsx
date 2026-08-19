@@ -39,6 +39,9 @@ export const metadata: Metadata = {
     shortcut: "/logo3.png",
     apple: "/logo3.png",
   },
+  verification: {
+    google: "VYTNMVv0X4dD11WvQYJeWy5mzhjFSr7ym65yZE6H_UU",
+  },
   openGraph: {
     title: "PT Arcadia Charcoal Indonesia | Premium Coconut Charcoal Exporter",
     description:
@@ -122,12 +125,33 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${plusJakartaSans.variable} light`}>
       <head>
+        {/* Google Tag Manager */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-PNNMPZM8');`,
+          }}
+        />
+        {/* End Google Tag Manager */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
       <body className="bg-[#FCFCFC] text-slate-950 font-sans antialiased min-h-screen selection:bg-red-600 selection:text-white">
+        {/* Google Tag Manager (noscript) */}
+        <noscript>
+          <iframe
+            src="https://www.googletagmanager.com/ns.html?id=GTM-PNNMPZM8"
+            height="0"
+            width="0"
+            style={{ display: "none", visibility: "hidden" }}
+          ></iframe>
+        </noscript>
+        {/* End Google Tag Manager (noscript) */}
         <LanguageProvider>
           <SmoothScroll>{children}</SmoothScroll>
         </LanguageProvider>
