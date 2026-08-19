@@ -8,6 +8,7 @@ import PerformanceHighlights from "@/components/PerformanceHighlights";
 import Gallery from "@/components/Gallery";
 import OemExperience from "@/components/OemExperience";
 import Legality from "@/components/Legality";
+import NewsTeaser from "@/components/NewsTeaser";
 import Footer from "@/components/Footer";
 
 export default function Home() {
@@ -23,6 +24,7 @@ export default function Home() {
       <Gallery />
       <OemExperience />
       <Legality />
+      <NewsTeaser />
       <Footer />
     </main>
   );

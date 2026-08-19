@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  LayoutDashboard,
+  Save, LayoutDashboard,
   FileText,
   CheckSquare,
   LogOut,
@@ -26,9 +26,33 @@ import {
   ImageIcon,
   UploadCloud,
   ShoppingBag,
+  Newspaper,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLanguage } from "@/context/LanguageContext";
+
+import dynamic from "next/dynamic";
+import "react-quill-new/dist/quill.snow.css";
+
+const ReactQuill = dynamic(() => import("react-quill-new"), { ssr: false });
+
+const quillModules = {
+  toolbar: [
+    [{ 'header': [1, 2, 3, false] }],
+    ['bold', 'italic', 'underline', 'strike'],
+    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+    ['link'],
+    ['clean']
+  ],
+};
+
+const quillFormats = [
+  'header',
+  'bold', 'italic', 'underline', 'strike',
+  'list',
+  'link'
+];
+
 
 export default function AdminDashboard() {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null);
@@ -249,6 +273,21 @@ export default function AdminDashboard() {
   const [galleryAlert, setGalleryAlert] = useState<{ type: "success" | "error"; msg: string } | null>(null);
   const [uploadingImgIndex, setUploadingImgIndex] = useState<number | null>(null);
 
+  // News Content State
+  const [newsItems, setNewsItems] = useState<any[]>([]);
+  const [isSavingNews, setIsSavingNews] = useState(false);
+  const [newsAlert, setNewsAlert] = useState<{ type: "success" | "error"; msg: string } | null>(null);
+  const [isUploadingNewsImg, setIsUploadingNewsImg] = useState(false);
+  const [editingNewsId, setEditingNewsId] = useState<string | null>(null);
+  const [newsForm, setNewsForm] = useState<any>({
+    title_id: "",
+    title_en: "",
+    content_id: "",
+    content_en: "",
+    image_url: "",
+  });
+
+
   // Products Content State
   const [productsForm, setProductsForm] = useState<any>({
     header_title_id: "Produk Arang & Spesifikasi",
@@ -287,6 +326,7 @@ export default function AdminDashboard() {
     { id: "legality", label: "Edit Legalitas", icon: ShieldCheck, badge: null },
     { id: "gallery", label: "Edit Galeri", icon: ImageIcon, badge: (galleryForm.photos_json || []).length },
     { id: "products", label: "Edit Produk", icon: ShoppingBag, badge: (productsForm.products_json || []).length },
+    { id: "news", label: "Edit Berita", icon: FileText, badge: (newsItems || []).length },
   ];
 
   const filteredNavItems = navItems.filter((item) => {
@@ -314,7 +354,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     async function loadData() {
       try {
-        const [resAbout, resFeatures, resPerf, resOem, resLegality, resGallery, resProducts] = await Promise.all([
+        const [resAbout, resFeatures, resPerf, resOem, resLegality, resGallery, resProducts, resNews] = await Promise.all([
           fetch("/api/about"),
           fetch("/api/features"),
           fetch("/api/performance"),
@@ -322,6 +362,7 @@ export default function AdminDashboard() {
           fetch("/api/legality"),
           fetch("/api/gallery"),
           fetch("/api/products"),
+          fetch("/api/news"),
         ]);
         const jsonAbout = await resAbout.json();
         const jsonFeatures = await resFeatures.json();
@@ -330,6 +371,7 @@ export default function AdminDashboard() {
         const jsonLegality = await resLegality.json();
         const jsonGallery = await resGallery.json();
         const jsonProducts = await resProducts.json();
+        const jsonNews = await resNews.json();
 
         if (jsonAbout.success && jsonAbout.data) setAboutForm(jsonAbout.data);
         if (jsonFeatures.success && jsonFeatures.data) setFeaturesForm(jsonFeatures.data);
@@ -338,6 +380,7 @@ export default function AdminDashboard() {
         if (jsonLegality.success && jsonLegality.data) setLegalityForm(jsonLegality.data);
         if (jsonGallery.success && jsonGallery.data) setGalleryForm(jsonGallery.data);
         if (jsonProducts.success && jsonProducts.data) setProductsForm(jsonProducts.data);
+        if (jsonNews.success && jsonNews.data) setNewsItems(jsonNews.data);
       } catch (err) {
         console.error("Error loading admin data:", err);
       }
@@ -791,6 +834,121 @@ export default function AdminDashboard() {
     return url;
   };
 
+  
+  const handleUploadNewsImg = async (file: File) => {
+    const apiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY || "949a3da1b4ea03c17bf20de030522347";
+    setIsUploadingNewsImg(true);
+    setNewsAlert(null);
+
+    try {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const res = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+        method: "POST",
+        body: formData,
+      });
+
+      const json = await res.json();
+      if (json.success && json.data?.url) {
+        const directUrl = json.data.url;
+        setNewsForm({ ...newsForm, image_url: directUrl });
+        setNewsAlert({ type: "success", msg: "Foto berita berhasil diunggah!" });
+      } else {
+        setNewsAlert({ type: "error", msg: `Gagal mengunggah foto: ${json.error?.message || "Error"}` });
+      }
+    } catch (err: any) {
+      console.error("News image upload error:", err);
+      setNewsAlert({ type: "error", msg: "Gagal mengunggah foto berita." });
+    } finally {
+      setIsUploadingNewsImg(false);
+    }
+  };
+
+
+  const handleNewsImgUpload = async (e: any) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setIsUploadingNewsImg(true);
+    setNewsAlert(null);
+    
+    const formData = new FormData();
+    formData.append("image", file);
+    
+    try {
+      const newsApiKey = process.env.NEXT_PUBLIC_IMGBB_API_KEY || "949a3da1b4ea03c17bf20de030522347";
+      const res = await fetch(`https://api.imgbb.com/1/upload?key=${newsApiKey}`, {
+        method: "POST",
+        body: formData,
+      });
+      const json = await res.json();
+      if (json.success) {
+        setNewsForm({ ...newsForm, image_url: json.data.url });
+        setNewsAlert({ type: "success", msg: "Gambar berhasil diunggah!" });
+      } else {
+        setNewsAlert({ type: "error", msg: "Gagal mengunggah gambar." });
+      }
+    } catch (err) {
+      setNewsAlert({ type: "error", msg: "Terjadi kesalahan saat mengunggah gambar." });
+    }
+    setIsUploadingNewsImg(false);
+  };
+
+  const handleSaveNews = async () => {
+    setIsSavingNews(true);
+    setNewsAlert(null);
+    try {
+      const method = (editingNewsId && editingNewsId !== "NEW") ? "PUT" : "POST";
+      const body = { ...newsForm, id: editingNewsId === "NEW" ? undefined : editingNewsId, sourceLanguage: editLang };
+      const res = await fetch("/api/news", {
+        method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setNewsAlert({ type: "success", msg: "Berita berhasil disimpan!" });
+        // Refresh news list
+        const resNews = await fetch("/api/news");
+        const dataNews = await resNews.json();
+        if (dataNews.success) setNewsItems(dataNews.data);
+        setEditingNewsId(null);
+        setNewsForm({ title_id: "", title_en: "", content_id: "", content_en: "", image_url: "" });
+      } else {
+        setNewsAlert({ type: "error", msg: data.message || "Gagal menyimpan berita" });
+      }
+    } catch (err) {
+      setNewsAlert({ type: "error", msg: "Terjadi kesalahan" });
+    }
+    setIsSavingNews(false);
+  };
+
+  const handleDeleteNews = async (id: string) => {
+    if (!confirm("Apakah Anda yakin ingin menghapus berita ini?")) return;
+    try {
+      const res = await fetch(`/api/news?id=${id}`, { method: "DELETE" });
+      const data = await res.json();
+      if (data.success) {
+        setNewsItems(newsItems.filter(item => item.id !== id));
+      } else {
+        alert(data.message || "Gagal menghapus berita");
+      }
+    } catch (err) {
+      alert("Terjadi kesalahan");
+    }
+  };
+
+  const handleEditNews = (item: any) => {
+    setEditingNewsId(item.id);
+    setNewsForm({
+      title_id: item.title_id || "",
+      title_en: item.title_en || "",
+      content_id: item.content_id || "",
+      content_en: item.content_en || "",
+      image_url: item.image_url || "",
+    });
+  };
+
   const handleLogout = () => {
     if (typeof window !== "undefined") {
       localStorage.removeItem("arcacoal_admin_session");
@@ -976,7 +1134,10 @@ export default function AdminDashboard() {
               {activeTab === "oem" && t("Visual Live Editor - OEM", "Visual Live Editor - OEM")}
               {activeTab === "legality" && t("Visual Live Editor - Legalitas", "Visual Live Editor - Legalitas")}
               {activeTab === "gallery" && t("Visual Live Editor - Galeri Foto", "Visual Live Editor - Galeri Foto")}
+            
+
               {activeTab === "products" && t("Visual Live Editor - Produk & Spesifikasi", "Visual Live Editor - Produk & Spesifikasi")}
+              {activeTab === "news" && t("Manajemen Berita (News)", "News Management")}
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">
               {t("Manage PT Arcadia Charcoal Indonesia content & international export inquiries.", "Kelola konten PT Arcadia Charcoal Indonesia & pesan ekspor internasional.")}
@@ -1147,6 +1308,15 @@ export default function AdminDashboard() {
                     <ShoppingBag className="w-6 h-6 text-slate-700 group-hover:text-[#E31E24] mb-3" />
                     <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#E31E24]">07. Section Produk & Spesifikasi</h4>
                     <p className="text-xs text-slate-500 mt-1">Edit spesifikasi produk briket, foto produk, tabel ukuran, & grade.</p>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveTab("news")}
+                    className="p-5 rounded-2xl bg-slate-50 hover:bg-red-50 border border-slate-200 hover:border-red-300 text-left transition-all group cursor-pointer"
+                  >
+                    <FileText className="w-6 h-6 text-slate-700 group-hover:text-[#E31E24] mb-3" />
+                    <h4 className="text-sm font-extrabold text-slate-950 group-hover:text-[#E31E24]">08. Section Berita</h4>
+                    <p className="text-xs text-slate-500 mt-1">Edit konten berita, hapus, & tambah dengan editor WYSIWYG.</p>
                   </button>
                 </div>
               </div>
@@ -2761,6 +2931,172 @@ export default function AdminDashboard() {
               </div>
             </div>
           )}
+          {/* TAB: VISUAL LIVE EDITOR - NEWS SECTION */}
+          {activeTab === "news" && (
+            <div className="space-y-8">
+              {newsAlert && (
+                <div className={`p-4 rounded-xl text-sm font-bold ${newsAlert.type === "success" ? "bg-green-50 text-green-700" : "bg-red-50 text-red-700"}`}>
+                  {newsAlert.msg}
+                </div>
+              )}
+
+              {/* LIST VIEW */}
+              {!editingNewsId && (
+                <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                      <h3 className="text-xl font-extrabold text-slate-950">Daftar Berita</h3>
+                      <p className="text-sm text-slate-500 mt-1">Kelola publikasi artikel dan berita.</p>
+                    </div>
+                    <button
+                      onClick={() => {
+                        setNewsForm({ title_id: "", title_en: "", content_id: "", content_en: "", image_url: "" });
+                        setEditingNewsId("NEW");
+                      }}
+                      className="px-5 py-2.5 bg-[#E31E24] hover:bg-red-700 text-white font-bold text-sm rounded-xl shadow-md transition-colors"
+                    >
+                      + Tambah Berita Baru
+                    </button>
+                  </div>
+
+                  {newsItems.length === 0 ? (
+                    <div className="text-center py-10 border-2 border-dashed border-slate-200 rounded-2xl">
+                      <p className="text-sm text-slate-500">Belum ada berita.</p>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                      {newsItems.map((item) => (
+                        <div key={item.id} className="group border border-slate-200 rounded-2xl overflow-hidden hover:border-red-300 hover:shadow-md transition-all flex flex-col bg-white">
+                          <div className="w-full h-40 bg-slate-100 relative overflow-hidden">
+                            {item.image_url ? (
+                              <img src={item.image_url} alt="" className="w-full h-full object-cover" />
+                            ) : (
+                              <div className="w-full h-full flex items-center justify-center text-slate-300">No Image</div>
+                            )}
+                          </div>
+                          <div className="p-4 flex-1 flex flex-col">
+                            <h4 className="font-bold text-sm text-slate-900 line-clamp-2 mb-2">{item.title_id || item.title_en}</h4>
+                            <p className="text-[10px] text-slate-400 mb-4">{new Date(item.created_at).toLocaleDateString("id-ID")}</p>
+                            <div className="mt-auto flex gap-2">
+                              <button onClick={() => { setNewsForm(item); setEditingNewsId(item.id); }} className="flex-1 py-2 bg-blue-50 hover:bg-blue-100 text-blue-700 text-xs font-bold rounded-lg transition-colors">
+                                Edit
+                              </button>
+                              <button onClick={() => handleDeleteNews(item.id)} className="flex-1 py-2 bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold rounded-lg transition-colors">
+                                Hapus
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* FORM VIEW */}
+              {editingNewsId && (
+                <div className="bg-white p-6 sm:p-8 rounded-3xl border border-slate-200/80 shadow-xs">
+                  <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
+                    <div>
+                      <h3 className="text-xl font-extrabold text-slate-950">
+                        {editingNewsId === "NEW" ? "Tambah Berita Baru" : "Edit Berita"}
+                      </h3>
+                      <p className="text-sm text-slate-500 mt-1">Isi detail konten berita di bawah ini.</p>
+                    </div>
+                    <button
+                      onClick={() => { setEditingNewsId(null); setNewsAlert(null); }}
+                      className="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition-colors"
+                    >
+                      Batal / Kembali
+                    </button>
+                  </div>
+
+                  <div className="space-y-6 max-w-4xl">
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 mb-1">Judul (Title) - {editLang.toUpperCase()}</label>
+                      <input
+                        type="text"
+                        className="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-red-500/20 focus:border-red-500"
+                        value={editLang === "id" ? newsForm.title_id : newsForm.title_en}
+                        onChange={(e) => setNewsForm({ ...newsForm, [editLang === "id" ? "title_id" : "title_en"]: e.target.value })}
+                        placeholder="Masukkan judul berita"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 mb-1">Konten (Content) - {editLang.toUpperCase()}</label>
+                      <div className="bg-white rounded-xl border border-slate-200">
+                        {/* @ts-ignore */}
+                        <ReactQuill 
+                          theme="snow"
+                          value={editLang === "id" ? newsForm.content_id : newsForm.content_en}
+                          onChange={(content) => setNewsForm({ ...newsForm, [editLang === "id" ? "content_id" : "content_en"]: content })}
+                          modules={quillModules}
+                          formats={quillFormats}
+                          className="bg-white"
+                        />
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-xs font-bold text-slate-500 mb-1">Gambar Berita</label>
+                      <div className="flex gap-4">
+                        <div className="w-32 h-32 bg-slate-50 border border-slate-200 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center">
+                          {newsForm.image_url ? (
+                            <img src={newsForm.image_url} alt="" className="w-full h-full object-cover" />
+                          ) : (
+                            <ImageIcon className="w-8 h-8 text-slate-300" />
+                          )}
+                        </div>
+                        <div className="flex-1 space-y-3">
+                          <button
+                            type="button"
+                            onClick={() => document.getElementById("news_img_upload")?.click()}
+                            disabled={isUploadingNewsImg}
+                            className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold rounded-lg transition-colors flex items-center gap-2"
+                          >
+                            <UploadCloud className="w-4 h-4" /> 
+                            {isUploadingNewsImg ? "Mengunggah..." : "Unggah Gambar"}
+                          </button>
+                          <input 
+                            type="file" 
+                            id="news_img_upload" 
+                            className="hidden" 
+                            accept="image/*"
+                            onChange={handleNewsImgUpload}
+                          />
+                          <p className="text-[10px] text-slate-400">Atau masukkan URL manual:</p>
+                          <input
+                            type="text"
+                            placeholder="https://..."
+                            className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs focus:outline-none"
+                            value={newsForm.image_url}
+                            onChange={(e) => setNewsForm({ ...newsForm, image_url: e.target.value })}
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="pt-4 border-t border-slate-100">
+                      <button
+                        onClick={handleSaveNews}
+                        disabled={isSavingNews}
+                        className="w-full sm:w-auto px-8 py-3 bg-[#E31E24] hover:bg-red-700 disabled:opacity-50 text-white font-bold text-sm rounded-xl shadow-lg shadow-red-500/30 transition-all flex items-center justify-center gap-2"
+                      >
+                        {isSavingNews ? (
+                          <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                        ) : (
+                          <Save className="w-5 h-5" />
+                        )}
+                        Simpan Berita
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+
         </div>
       </main>
 
